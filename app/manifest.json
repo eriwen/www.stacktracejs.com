@@ -1,0 +1,16 @@
+{
+  "name": "StackTrace.JS",
+  "short_name": "StackTrace.JS",
+  "icons": [{
+        "src": "images/touch/apple-touch-icon.png",
+        "sizes": "152x152"
+      }, {
+        "src": "images/touch/ms-touch-icon-150x150.png",
+        "sizes": "150x150"
+      }, {
+        "src": "images/touch/android-chrome-192x192.png",
+        "sizes": "192x192"
+      }],
+  "start_url": "/",
+  "display": "standalone"
+}

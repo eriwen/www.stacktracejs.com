@@ -1,0 +1,36 @@
+<h1 id="error-stack-parser-js-extract-meaning-from-js-errors">error-stack-parser.js - Extract meaning from JS Errors</h1>
+<p><a href="https://travis-ci.org/stacktracejs/error-stack-parser"><img src="https://travis-ci.org/stacktracejs/error-stack-parser.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/error-stack-parser"><img src="https://img.shields.io/coveralls/stacktracejs/error-stack-parser.svg" alt="Coverage Status"></a> <a href="https://codeclimate.com/github/stacktracejs/error-stack-parser"><img src="https://codeclimate.com/github/stacktracejs/error-stack-parser/badges/gpa.svg" alt="Code Climate"></a></p>
+<p>Simple, cross-browser <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a> parser.
+This library parses and extracts function names, URLs, line numbers, and column numbers from the given Error&#39;s <code>stack</code> as
+an Array of <a href="http://git.io/stackframe">StackFrame</a>s. </p>
+<p>Once you have parsed out StackFrames, you can do much more interesting things. See <a href="http://git.io/stacktrace-gps">stacktrace-gps</a>.</p>
+<p>Note that in IE9 and earlier, <code>Error</code> objects don&#39;t have enough information to extract much of anything. In IE 10, <code>Error</code>s
+are given a <code>stack</code> once they&#39;re <code>throw</code>n. </p>
+<h2 id="usage">Usage</h2>
+<pre><code class="lang-js">ErrorStackParser.parse(new Error(&#39;boom&#39;));
+
+=&gt; [
+        StackFrame(&#39;funky1&#39;, [], &#39;path/to/file.js&#39;, 35, 79), 
+        StackFrame(&#39;filter&#39;, undefined, &#39;https://cdn.somewherefast.com/utils.min.js&#39;, 1, 832),
+        StackFrame(... and so on ...)
+   ]
+</code></pre>
+<h2 id="installation">Installation</h2>
+<pre><code class="lang-bash">npm install error-stack-parser
+bower install error-stack-parser
+https://raw.githubusercontent.com/stacktracejs/error-stack-parser/master/dist/error-stack-parser.min.js
+</code></pre>
+<h2 id="browser-support">Browser Support</h2>
+<ul>
+<li>Chrome 1+</li>
+<li>Firefox 3.6+</li>
+<li>Safari 7+</li>
+<li>Opera 9+</li>
+<li>IE 10+</li>
+<li>iOS 7+</li>
+<li>Android 4.2+</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>Want to be listed as a <em>Contributor</em>? Start with the <a href="CONTRIBUTING.md">Contributing Guide</a>!</p>
+<h2 id="license">License</h2>
+<p>This project is licensed to the <a href="http://unlicense.org">Public Domain</a></p>

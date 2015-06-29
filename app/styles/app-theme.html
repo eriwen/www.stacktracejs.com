@@ -1,0 +1,246 @@
+<style is="custom-style">
+
+  /*
+   Polymer includes a shim for CSS Custom Properties that we can use for application theming.
+   Below, you'll find the default palette for the Polymer Starter Kit layout. Feel free to play
+   with changing the colors used or generate your own palette of colours at MaterialPalette.com.
+
+   See https://www.polymer-project.org/1.0/docs/devguide/styling.html#xscope-styling-details
+   for further information on custom CSS properties.
+   */
+
+  /* Application theme */
+
+  :root {
+    --dark-primary-color: #008887;
+    --default-primary-color: #00A1A0;
+    --light-primary-color: #1abbba;
+    --text-primary-color: #ffffff; /*text/icons*/
+    --accent-color: #FF6618;
+    --primary-background-color: #fff;
+    --primary-text-color: #0F2936;
+    --secondary-text-color: #294350;
+    --disabled-text-color: #a8c2cf;
+    --divider-color: #ddd;
+
+    /* Components */
+
+    /* paper-drawer-panel */
+    --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
+
+    /* paper-menu */
+    --paper-menu-color: #0F2936;
+    --paper-menu-disabled-color: #0F2936;
+    --menu-link-color: #0F2936;
+
+    /* paper-toolbar */
+    --paper-toolbar-background: white;
+    --paper-toolbar-color: #0F2936;
+  }
+
+  /* General styles */
+  /*TODO: test perf after vulcanize*/
+  a {
+    color: var(--dark-primary-color);
+    text-decoration: none;
+  }
+
+  .bg-accent a, .bg-primary a {
+    color: #ccf6ff;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+  }
+
+  paper-material {
+    border-radius: 2px;
+    height: 100%;
+    padding: 16px 0 16px 0;
+    width: calc(98.66% - 16px);
+    margin: 16px auto;
+    background: white;
+  }
+
+  paper-item.paper-item-0 {
+    font-family: Gotham, sans-serif;
+    font-weight: 300;
+  }
+
+  .hero paper-ripple {
+    color: white;
+  }
+
+  paper-toolbar a {
+    color: var(--paper-toolbar-color);
+  }
+
+
+  paper-menu iron-icon {
+    margin-right: 20px;
+    opacity: 0.6;
+  }
+
+  paper-menu a {
+    text-decoration: none;
+    color: var(--menu-link-color);
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    min-height: 48px;
+    padding: 0 16px;
+  }
+
+  .paper-menu > .iron-selected a {
+    color: var(--default-primary-color);
+  }
+
+  .bg-primary {
+    background-color: var(--default-primary-color);
+    color: white;
+  }
+
+  .bg-accent {
+    background-color: var(--accent-color);
+    color: white;
+  }
+
+  .bg-white {
+    background-color: white;
+    color: var(--primary-text-color);
+  }
+
+  .main-nav a {
+    padding: 5px;
+  }
+  .main-nav path {
+    fill: var(--secondary-text-color);
+    transition: fill 0.25s ease-out;
+  }
+  .main-nav a:first-of-type:hover path {
+    fill: var(--default-primary-color);
+  }
+  .main-nav a:hover path {
+    fill: var(--accent-color);
+  }
+
+  .hero paper-button {
+    background-color: white;
+    color: var(--primary-text-color);
+    font-weight: 400;
+  }
+
+  .drawer-toolbar header img:first-of-type {
+    margin: 0 0.4rem;
+  }
+
+  .drawer-toolbar header h1 {
+    color: var(--default-primary-color);
+    font-size: 1.5rem;
+  }
+
+  .drawer-toolbar .drawer-header-link {
+    padding: 6px;
+    text-decoration: none;
+  }
+
+  .drawer-toolbar .drawer-header-link svg:first-of-type {
+    height: 32px;
+    width: 32px;
+  }
+  .drawer-toolbar .drawer-header-link svg:last-of-type {
+    height: 32px;
+    margin-left: 2px;
+    width: 172px;
+  }
+
+  .drawer-footer {
+    font-size: 0.8rem;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0 1.5rem 0 1.5rem;
+  }
+
+  /* Breakpoints */
+
+  /* Phones */
+  @media (max-width: 480px) {
+    .app-title svg:last-of-type {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    paper-material {
+      --menu-container-display: none;
+      width: calc(97.33% - 32px);
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  /* Tablet+ */
+  @media (min-width: 601px) {
+    paper-material {
+      width: calc(98% - 46px);
+      margin-bottom: 32px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .paper-drawer-panel > [drawer] {
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 960px) {
+    /*Disable header animation*/
+    .slide-up {
+      height: auto;
+      transform: none;
+    }
+    .api-docs {
+      padding-left: 1rem;
+    }
+    .api-docs pre {
+      overflow: hidden;
+      width: 90%;
+    }
+    .get-started figcaption {
+      margin: 0;
+    }
+    .get-started figure {
+      -ms-flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+    }
+    .get-started .code {
+      -webkit-flex-basis: auto;
+      flex-basis: auto;
+      max-width: 100%;
+    }
+    .why-stacktrace .layout.horizontal {
+      -ms-flex-direction: column;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+    .hero-content a:first-of-type,
+    .get-started .logo-step-img,
+    .shields {
+      display: none;
+    }
+  }
+</style>

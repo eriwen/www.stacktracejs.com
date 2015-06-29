@@ -1,0 +1,245 @@
+body {
+  background: white;
+  font-family: Gotham, sans-serif;
+  font-weight: 200;
+  color: #0F2936;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 400;
+  line-height: 1.3em;
+}
+
+h1 {
+  font-weight: 200;
+  font-size: 2.8561rem;
+}
+h2 {
+  font-size: 2.197rem;
+}
+h3 {
+  font-size: 1.69rem
+}
+h4 {
+  font-size: 1.3rem
+}
+
+#main-toolbar {
+  transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+.slide-up {
+  height: 0;
+  transform: translateY(-50px);
+}
+
+.app-title {
+  text-decoration: none;
+}
+
+.app-title svg:first-of-type {
+  height: 50px;
+  margin-right: 10px;
+  vertical-align: super;
+  width: 50px;
+}
+
+.app-title svg:last-of-type {
+  height: 64px;
+  width: 344px;
+}
+
+.hero {
+  padding: 75px 0;
+  text-align: center;
+}
+.hero h1 {
+  font-weight: 400;
+  margin: 1rem 0;
+}
+.hero h2 {
+  font-size: 1.3rem;
+  font-weight: 200;
+  margin-bottom: 2.5rem;
+}
+
+.hero-content {
+  text-align: center;
+}
+
+.hero-button-text {
+  vertical-align: middle;
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.get-started figure {
+  min-height: 125px;
+  padding: 0 25px;
+}
+
+.get-started .logo-step-img {
+  flex: 0 0 100px;
+}
+
+.get-started svg {
+  height: 100px;
+  width: 100px;
+}
+
+.get-started figcaption {
+  margin: 0 50px;
+}
+
+.get-started figcaption h3 {
+  margin: 0 0 5px 0;
+}
+
+.get-started p {
+  margin: 0;
+}
+
+.get-started .code {
+  border: 1px dashed #ddd;
+  cursor: text;
+  flex: 0 0 330px;
+  margin: 0;
+  padding: 10px;
+}
+
+.why-stacktrace {
+  min-height: 250px;
+  font-size: 1.1rem;
+}
+.why-stacktrace header h2 {
+  margin-bottom: 1rem;
+}
+.why-stacktrace h3 {
+  margin: 0.4rem;
+}
+.why-stacktrace p, .why-stacktrace ul {
+  margin: 0;
+  padding: 1rem;
+}
+
+.flex.two {
+  flex: 2;
+}
+
+.flex.three {
+  flex: 3;
+}
+
+.content header {
+  text-align: center;
+}
+
+figure {
+  margin: 1.5rem 0;
+}
+
+.home-footer {
+  font-size: 0.9rem;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.api-docs {
+  padding: 0 0 2rem 3.5rem;
+  position: relative;
+  max-width: 768px;
+}
+
+/* Header */
+.api-docs h1:first-of-type,
+.api-docs h2:first-of-type {
+  /*background-color: #FF6618; /!*#00A1A0;*!/*/
+  /*color: white;*/
+  font-size: 2.73rem;
+  font-weight: 200;
+  margin: 0;
+}
+
+.api-docs h1:first-of-type {
+  padding-top: 1rem;
+}
+
+.api-docs h2:first-of-type {
+  font-size: 1.1rem;
+  padding-bottom: 2rem;
+}
+
+/* Badges */
+.api-docs .shields {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+}
+
+.shields img {
+  border: 0 none;
+}
+
+.api-docs h2:not(:first-of-type) {
+  border-bottom: 1px solid #eee;
+  font-weight: 400;
+  margin: 2rem 0 0.5rem;
+}
+
+.api-docs #api~h4, .api-docs #api~h4 code {
+  font-family: Menlo, Monaco, Consolas, Lucida Console, dejavu sans mono, monospace;
+  font-size: 1.3rem;
+  margin-bottom: 0;
+}
+
+.api-docs p {
+  color: #294350;
+  margin: 0.3rem 0;
+}
+
+.api-docs pre {
+  background-color: #f6f6f6;
+  border-left: 4px solid orange;
+  border-radius: 3px;
+  overflow: auto;
+  padding: 10px;
+  width: calc(100% - 1.5rem);
+}
+
+.api-docs pre, .api-docs code, .code {
+  font-family: Menlo, Monaco, Consolas, Lucida Console, dejavu sans mono, monospace;
+  font-size: 15px;
+}
+
+pre .token.operator {
+  background: none;
+}
+
+pre .token.keyword {
+  font-weight: 600;
+}
+
+pre .token.punctuation {
+  color: #aaa;
+}
+
+.api-docs ul {
+  list-style-type: none;
+  margin: 0.5rem 0;
+  padding-left: 2rem;
+}

@@ -1,0 +1,19 @@
+<script src="../../bower_components/page/page.js"></script>
+<script>
+  window.addEventListener('WebComponentsReady', function () {
+    page('/', function () {
+      app.route = 'home';
+      document.body.dispatchEvent(new CustomEvent('st:hide-docs'));
+    });
+
+    // Docs pages
+    ['stacktrace-js', 'stacktrace-gps', 'error-stack-parser', 'stack-generator', 'stackframe'].forEach(function(url) {
+      page('/docs/' + url, function () {
+        app.route = url;
+        document.body.dispatchEvent(new CustomEvent('st:show-docs'));
+      });
+    });
+
+    page();
+  });
+</script>

@@ -1,0 +1,35 @@
+<h1 id="stackframe-js-object-representation-of-a-stack-frame-">stackframe - JS Object representation of a stack frame. </h1>
+<p><a href="https://travis-ci.org/stacktracejs/stackframe"><img src="https://travis-ci.org/stacktracejs/stackframe.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stackframe?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/stackframe.svg" alt="Coverage Status"></a> <a href="https://codeclimate.com/github/stacktracejs/stackframe"><img src="https://codeclimate.com/github/stacktracejs/stackframe/badges/gpa.svg" alt="Code Climate"></a></p>
+<p>Underlies functionality of other modules within <a href="http://www.stacktracejs.com">stacktrace.js</a>.</p>
+<p>Written to closely resemble StackFrame representations in <a href="http://mxr.mozilla.org/mozilla-central/source/xpcom/base/nsIException.idl#14">Gecko</a> and <a href="https://code.google.com/p/v8-wiki/wiki/JavaScriptStackTraceApi">V8</a></p>
+<h2 id="usage">Usage</h2>
+<pre><code class="lang-js">// Create StackFrame and set properties
+var stackFrame = new StackFrame(&#39;funName&#39;, [&#39;args&#39;], &#39;http://localhost:3000/file.js&#39;, 1, 3288);
+
+stackFrame.functionName                // =&gt; &quot;funName&quot;
+stackFrame.setFunctionName(&#39;newName&#39;)
+stackFrame.getFunctionName()           // =&gt; &quot;newName&quot;
+
+stackFrame.args        // =&gt; [&quot;args&quot;]
+stackFrame.setArgs([])
+stackFrame.getArgs()   // =&gt; []
+
+stackFrame.fileName                                      // =&gt; &#39;http://localhost:3000/file.min.js&#39;
+stackFrame.setFileName(&#39;http://localhost:3000/file.js&#39;)  
+stackFrame.getFileName()                                 // =&gt; &#39;http://localhost:3000/file.js&#39;
+
+stackFrame.lineNumber          // =&gt; 1
+stackFrame.setLineNumber(325)
+stackFrame.getLineNumber()     // =&gt; 325
+
+stackFrame.columnNumber          // =&gt; 3288
+stackFrame.setColumnNumber(20)
+stackFrame.getColumnNumber()     // =&gt; 20
+
+stackFrame.toString() // =&gt; &#39;funName(args)@http://localhost:3000/file.js:325:20&#39;
+</code></pre>
+<h2 id="installation">Installation</h2>
+<pre><code>npm install stackframe
+bower install stackframe
+https://raw.githubusercontent.com/stacktracejs/stackframe/master/dist/stackframe.min.js
+</code></pre>
