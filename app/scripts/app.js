@@ -33,6 +33,15 @@
       document.body.dispatchEvent(event);
       el.innerHTML = event.detail.code;
     });
+
+    // Twitter Button code
+    var fjs = document.getElementsByTagName('script')[0];
+    if (!document.getElementById('twitter-wjs')) {
+      var js = document.createElement('script');
+      js.id = 'twitter-wjs';
+      js.src = 'http://platform.twitter.com/widgets.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
