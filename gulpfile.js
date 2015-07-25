@@ -113,7 +113,7 @@ gulp.task('copy', function () {
 
 gulp.task('generate-docs', function () {
   var projects = ['stacktrace.js', 'stacktrace-gps', 'error-stack-parser', 'stack-generator', 'stackframe'];
-  projects.map(function(project) {
+  projects.map(function (project) {
     var url = 'https://raw.githubusercontent.com/stacktracejs/' + project + '/master/README.md';
     $.download(url)
       .pipe($.markdown())
@@ -160,8 +160,7 @@ gulp.task('vulcanize', function () {
 
   return gulp.src('dist/elements/elements.vulcanized.html')
     .pipe($.vulcanize({
-      dest: DEST_DIR,
-      strip: true,
+      stripComments: true,
       inlineCss: true,
       inlineScripts: true
     }))
