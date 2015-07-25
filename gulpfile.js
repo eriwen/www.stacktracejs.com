@@ -242,6 +242,15 @@ gulp.task('serve:dist', ['default'], function () {
   });
 });
 
+// Removes unneeded bower files from dis
+// Note: bower_components are needed for vulcanize which is called before
+gulp.task('stripDist', del.bind(null, [
+  'dist/bower_components/*/',
+  '!dist/bower_components/webcomponentsjs/',
+  'dist/bower_components/webcomponentsjs/*',
+  '!dist/bower_components/webcomponentsjs/webcomponents-lite.min.js'
+]));
+
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
   runSequence(
@@ -249,6 +258,7 @@ gulp.task('default', ['clean'], function (cb) {
     'elements',
     ['jshint', 'images', 'fonts', 'html'],
     'vulcanize',
+    'stripDist',
     cb);
   // Note: add , 'precache' , after 'vulcanize', if your are going to use Service Worker
 });
