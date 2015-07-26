@@ -263,6 +263,35 @@ gulp.task('default', ['clean'], function (cb) {
   // Note: add , 'precache' , after 'vulcanize', if your are going to use Service Worker
 });
 
+gulp.task('publish', function () {
+  // create a new publisher using S3 options
+  // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
+  var publisher = $.awspublish.create({
+    params: {
+      Bucket: 'www.stacktracejs.com'
+    },
+    region: 'us-west-1'
+  });
+
+  var headers = {
+    'Cache-Control': 'max-age=315360000, no-transform, public'
+  };
+
+  return gulp.src('./dist/**')
+    // gzip, Set Content-Encoding headers and avoid .gz extension
+    .pipe($.awspublish.gzip({ext: ''}))
+
+    // publisher will add Content-Length, Content-Type and headers specified above
+    // If not specified it will set x-amz-acl to public-read by default
+    .pipe(publisher.publish(headers))
+
+    // create a cache file to speed up consecutive uploads
+    .pipe(publisher.cache())
+
+    // print upload updates to console
+    .pipe($.awspublish.reporter());
+});
+
 // Load tasks for web-component-tester
 // Adds tasks for `gulp test:local` and `gulp test:remote`
 require('web-component-tester').gulp.init(gulp);
