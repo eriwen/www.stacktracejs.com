@@ -7,7 +7,7 @@
     });
 
     // Docs pages
-    ['stacktrace-js', 'stacktrace-gps', 'error-stack-parser', 'stack-generator', 'stackframe'].forEach(function(url) {
+    ['stacktrace-js', 'stacktrace-gps', 'error-stack-parser', 'stack-generator', 'stackframe', 'v0-migration-guide'].forEach(function(url) {
       page('/docs/' + url, function () {
         app.route = url;
         document.body.dispatchEvent(new CustomEvent('st:show-docs'));

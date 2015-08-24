@@ -248,33 +248,93 @@ StackTrace.report(stackframes, url);
             </footer>
           </section>
 
+          <section data-route="v0-migration-guide" class="api-docs">
+            <h1 id="migrating-from-v0-x-to-v1-x">Migrating from v0.x to v1.x</h1>
+            <p>In version 1.x, We&#39;ve switched from a <em>synchronous</em> API to an <em>asynchronous</em> one using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a>
+              because synchronous ajax calls are <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests#Synchronous_request">deprecated</a>
+              and frowned upon due to performance implications.</p>
+            <blockquote>
+              <p><strong>HEADS UP:</strong> StackTrace.JS does <em>NOT</em> provide a Promises polyfill by default, but we do distribute a <a href="https://raw.githubusercontent.com/stacktracejs/stacktrace.js/master/dist/stacktrace-with-polyfills.min.js">version with polyfills</a>!
+                Check <a href="http://caniuse.com/#feat=promises">the Promises page on caniuse.com</a> to determine if you need one.</p>
+            </blockquote>
+            <p>All methods now return <a href="https://github.com/stacktracejs/stackframe">stackframe</a>s.
+              This Object representation is modeled closely after StackFrame representations in Gecko and V8.
+              All you have to do to get stacktrace.js v0.x behavior is call <code>.toString()</code> on a stackframe.</p>
+            <h3 id="use-case-give-me-a-trace-from-wherever-i-am-right-now">Use Case: Give me a trace from wherever I am right now</h3>
+            <p>v0.x:</p>
+<pre><code class="lang-js">printStackTrace();
+=&gt; Array[String]
+</code></pre>
+            <p>v1.x:</p>
+<pre><code class="lang-js">StackTrace.get().then(callback).catch(errback);
+=&gt; Promise(Array[StackFrame], Error)
+</code></pre>
+            <p><code>StackTrace.get()</code> returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></p>
+            <h3 id="use-case-parse-this-error">Use Case: Parse this error</h3>
+            <p>v0.x:</p>
+<pre><code class="lang-js">var error = new Error(&#39;Boom&#39;);
+printStackTrace({e: error});
+=&gt; Array[String]
+</code></pre>
+            <p>v1.x:</p>
+<pre><code class="lang-js">var error = new Error(&#39;Boom&#39;);
+StackTrace.fromError(error).then(callback).catch(errback);
+=&gt; Promise(Array[StackFrame], Error);
+</code></pre>
+            <p>If this is all you need, you don&#39;t even need the full stacktrace.js library! Just use <a href="https://github.com/stacktracejs/error-stack-parser">error-stack-parser</a>!</p>
+<pre><code class="lang-js">ErrorStackParser.parse(new Error(&#39;boom&#39;));
+</code></pre>
+            <h3 id="use-case-give-me-a-trace-anytime-this-function-is-called">Use Case: Give me a trace anytime this function is called</h3>
+            <p>Instrumenting now takes <code>Function</code> references instead of <code>String</code>s. </p>
+            <p>v0.x:</p>
+<pre><code class="lang-js">function interestingFn() {...};
+
+var p = new printStackTrace.implementation();
+p.instrumentFunction(this, &#39;interestingFn&#39;, logStackTrace);
+=&gt; Function (instrumented)
+p.deinstrumentFunction(this, &#39;interestingFn&#39;);
+=&gt; Function (original)
+</code></pre>
+            <p>v1.x:</p>
+<pre><code class="lang-js">function interestingFn() {...};
+
+StackTrace.instrument(interestingFn, callback, errback);
+=&gt; Function (instrumented)
+
+StackTrace.deinstrument(interestingFn);
+=&gt; Function (original)
+</code></pre>
+          </section>
+
           <section data-route="stacktrace-js" class="api-docs">
             <h1 id="stacktrace-js">stacktrace.js</h1>
-            <h2>Framework-agnostic, micro-library for getting stack traces in all web browsers</h2>
+            <h2 id="framework-agnostic-micro-library-for-getting-stack-traces-in-all-web-browsers">Framework-agnostic, micro-library for getting stack traces in all web browsers</h2>
             <p class="shields"><iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=stacktrace.js&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe><a href="https://travis-ci.org/stacktracejs/stacktrace.js"><img src="https://travis-ci.org/stacktracejs/stacktrace.js.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stacktrace.js?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/stacktrace.js.svg" alt="Coverage Status"></a> <a href="https://codeclimate.com/github/stacktracejs/stacktrace.js"><img src="https://codeclimate.com/github/stacktracejs/stacktrace.js/badges/gpa.svg" alt="Code Climate"></a></p>
-            <p>A JavaScript tool that allows you to debug your JavaScript by giving you a <a href="http://en.wikipedia.org/wiki/Stack_trace">stack trace</a> of function calls leading to an error (or any condition you specify).</p>
+
+            <p>Debug and profile your JavaScript with a <a href="http://en.wikipedia.org/wiki/Stack_trace">stack trace</a> of function calls leading to an error (or any condition you specify).</p>
+            <h3 id="upgrading-check-the-0-x-1-x-migration-guide-http-www-stacktracejs-com-docs-v0-migration-guide-">Upgrading? Check the <a href="http://www.stacktracejs.com/docs/v0-migration-guide">0.x -&gt; 1.x Migration Guide</a></h3>
             <h2 id="usage">Usage</h2>
 <pre><code class="lang-js">var callback = function(stackframes) {
   var stringifiedStack = stackframes.map(function(sf) {
     return sf.toString();
-  }).join('\n');
+  }).join(&#39;\n&#39;);
   console.log(stringifiedStack);
 };
 
 var errback = function(err) { console.log(err.message); };
 
-StackTrace.get().then(callback, errback)
-=&gt; Promise(Array[StackFrame](https://github.com/stacktracejs/stackframe), Error)
-=&gt; callback([StackFrame('func1', [], 'file.js', 203, 9), StackFrame('func2', [], 'http://localhost:3000/file.min.js', 1, 3284)])
+StackTrace.get().then(callback).catch(errback)
+=&gt; Promise(Array[StackFrame], Error)
+=&gt; callback([StackFrame(&#39;func1&#39;, [], &#39;file.js&#39;, 203, 9), StackFrame(&#39;func2&#39;, [], &#39;http://localhost:3000/file.min.js&#39;, 1, 3284)])
 
 // Somewhere else...
-var error = new Error('BOOM!');
+var error = new Error(&#39;BOOM!&#39;);
 
-StackTrace.fromError(error).then(callback, errback)
-=&gt; Promise(Array[StackFrame](https://github.com/stacktracejs/stackframe), Error)
+StackTrace.fromError(error).then(callback).catch(errback)
+=&gt; Promise(Array[StackFrame], Error)
 
-StackTrace.generateArtificially().then(callback, errback)
-=&gt; Promise(Array[StackFrame](https://github.com/stacktracejs/stackframe), Error)
+StackTrace.generateArtificially().then(callback).catch(errback)
+=&gt; Promise(Array[StackFrame], Error)
 
 StackTrace.instrument(interestingFn, callback, errback)
 =&gt; Instrumented Function
@@ -285,42 +345,46 @@ StackTrace.deinstrument(interestingFn)
             <h2 id="get-stacktrace-js">Get stacktrace.js</h2>
 <pre><code>npm install stacktrace-js
 bower install stacktrace-js
-https://rawgithub.com/stacktracejs/stacktrace.js/master/dist/stacktrace.min.js
-</code></pre><h3 id="stacktrace-js-is-available-on-cdnjs-com">stacktrace.js is available on cdnjs.com</h3>
-            <p><a href="https://cdnjs.com/libraries/stacktrace.js">https://cdnjs.com/libraries/stacktrace.js</a></p>
-            <h2 id="api">API</h2>
-            <h4 id="-stacktrace-get-optional-options-promise-array-stackframe-"><code>StackTrace.get(/*optional*/ options)</code> =&gt; Promise(Array[StackFrame])</h4>
-            <p>Generate a backtrace from invocation point, then parse and enhance it.
-              options: Object</p>
+https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.0.0/stacktrace.min.js
+</code></pre><h2 id="api">API</h2>
+            <h4><code>StackTrace.get(options)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>])</h4>
+            <p>Generate a backtrace from invocation point, then parse and enhance it.</p>
+            <p><strong>(Optional) options: Object</strong></p>
             <ul>
-              <li><strong>sourceCache: Object (String URL =&gt; String Source)</strong> - Pre-populate source cache to avoid network requests</li>
-              <li><strong>offline: Boolean (default: false)</strong> - Set to <code>true</code> to prevent all network requests</li>
+              <li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>  =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code> </li>
+              <li><em>sourceCache: Object (String URL =&gt; String Source)</em> - Pre-populate source cache to avoid network requests</li>
+              <li><em>offline: Boolean (default: false)</em> - Set to <code>true</code> to prevent all network requests</li>
             </ul>
-            <h4 id="-stacktrace-fromerror-error-optional-options-promise-array-stackframe-"><code>StackTrace.fromError(error, /*optional*/ options)</code> =&gt; Promise(Array[StackFrame])</h4>
+            <h4><code>StackTrace.fromError(error, options)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>])</h4>
             <p>Given an Error object, use <a href="https://github.com/stacktracejs/error-stack-parser">error-stack-parser</a>
               to parse it and enhance location information with <a href="https://github.com/stacktracejs/stacktrace-gps">stacktrace-gps</a>.</p>
+            <p><strong>error: Error</strong>
+              <strong>(Optional) options: Object</strong></p>
             <ul>
-              <li><strong>sourceCache: Object (String URL =&gt; String Source)</strong> - Pre-populate source cache to avoid network requests</li>
-              <li><strong>offline: Boolean (default: false)</strong> - Set to <code>true</code> to prevent all network requests</li>
+              <li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a> =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code></li>
+              <li><em>sourceCache: Object (String URL =&gt; String Source)</em> - Pre-populate source cache to avoid network requests</li>
+              <li><em>offline: Boolean (default: false)</em> - Set to <code>true</code> to prevent all network requests</li>
             </ul>
-            <h4 id="-stacktrace-generateartificially-optional-options-promise-array-stackframe-"><code>StackTrace.generateArtificially(/*optional*/ options)</code> =&gt; Promise(Array[StackFrame])</h4>
+            <h4><code>StackTrace.generateArtificially(options)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>])</h4>
             <p>Use <a href="https://github.com/stacktracejs/stack-generator">stack-generator</a> to generate a backtrace by walking the <code>arguments.callee.caller</code> chain.</p>
+            <p><strong>(Optional) options: Object</strong></p>
             <ul>
-              <li><strong>sourceCache: Object (String URL =&gt; String Source)</strong> - Pre-populate source cache to avoid network requests</li>
-              <li><strong>offline: Boolean (default: false)</strong> - Set to <code>true</code> to prevent all network requests</li>
+              <li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a> =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code></li>
+              <li><em>sourceCache: Object (String URL =&gt; String Source)</em> - Pre-populate source cache to avoid network requests</li>
+              <li><em>offline: Boolean (default: false)</em> - Set to <code>true</code> to prevent all network requests</li>
             </ul>
-            <h4 id="-stacktrace-instrument-fn-callback-optional-errback-boolean"><code>StackTrace.instrument(fn, callback, /*optional*/ errback)</code> =&gt; Boolean</h4>
+            <h4 id="-stacktrace-instrument-fn-callback-optional-errback-boolean"><code>StackTrace.instrument(fn, callback, errback)</code> =&gt; Boolean</h4>
             <p>Call callback with a <em>stack trace</em> anytime <code>fn</code> is called. Returns <code>true</code> if given Function is successfully instrumented</p>
             <ul>
-              <li><strong>fn</strong> - Function to wrap, call callback on invocation and call-through</li>
-              <li><strong>callback</strong> - Function to call with stack trace (generated by <code>StackTrace.get()</code>) when fn is called</li>
-              <li><strong>errback</strong> - (Optional) Function to call with Error object if there was a problem getting a stack trace.
-                Fails silently (though <code>fn</code> is still called) if a stack trace couldn't be generated.</li>
+              <li><strong>fn: Function</strong> - to wrap, call callback on invocation and call-through</li>
+              <li><strong>callback: Function</strong> - to call with stack trace (generated by <code>StackTrace.get()</code>) when fn is called</li>
+              <li><strong>(Optional) errback: Function</strong> - to call with Error object if there was a problem getting a stack trace.
+                Fails silently (though <code>fn</code> is still called) if a stack trace couldn&#39;t be generated.</li>
             </ul>
             <h4 id="-stacktrace-deinstrument-fn-boolean"><code>StackTrace.deinstrument(fn)</code> =&gt; Boolean</h4>
-            <p>Remove StackTrace instrumentation on <code>fn</code>. Returns <code>true</code> if deinstrumentation succeeds.</p>
+            <p>Remove StackTrace instrumentation on <code>fn</code>. Returns <code>true</code> if de-instrumentation succeeds.</p>
             <ul>
-              <li><strong>fn</strong> - Previously wrapped Function</li>
+              <li><strong>fn: Function</strong> - Previously wrapped Function</li>
             </ul>
             <h2 id="browser-support">Browser Support</h2>
             <ul>
@@ -332,10 +396,12 @@ https://rawgithub.com/stacktracejs/stacktrace.js/master/dist/stacktrace.min.js
               <li>iOS 7+</li>
               <li>Android 4.0+</li>
             </ul>
-            <p><em>NOTE: You won't get the benefit of <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a>
-              in IE9- or other very old browsers.</em></p>
+            <blockquote>
+              <p><strong>HEADS UP</strong>: You won&#39;t get the benefit of <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a>
+                in IE9- or other very old browsers.</p>
+            </blockquote>
             <h2 id="using-node-js-io-js-only-">Using node.js/io.js only?</h2>
-            <p>I recommend the <a href="https://www.npmjs.com/package/stack-trace">stack-trace node package</a>.
+            <p>I recommend the <a href="https://www.npmjs.com/package/stack-trace">stack-trace node package</a> specifically built for node.
               It has a very similar API and also supports source maps.</p>
             <h2 id="contributing">Contributing</h2>
             <p>Want to be listed as a <em>Contributor</em>? Start with the <a href="https://github.com/stacktracejs/stacktrace.js/blob/master/CONTRIBUTING.md">Contributing Guide</a>!</p>
@@ -343,6 +409,7 @@ https://rawgithub.com/stacktracejs/stacktrace.js/master/dist/stacktrace.min.js
             <ul>
               <li><a href="http://www.eriwen.com">Eric Wendelin</a></li>
               <li><a href="https://github.com/victor-homyakov">Victor Homyakov</a></li>
+              <li><a href="https://github.com/oliversalzburg">Oliver Salzburg</a></li>
               <li><a href="https://github.com/stacktracejs/stacktrace.js/graphs/contributors">Many others</a></li>
             </ul>
           </section>
@@ -482,7 +549,7 @@ https://raw.githubusercontent.com/stacktracejs/stack-generator/master/dist/stack
 
           <section data-route="stackframe" class="api-docs">
             <h1 id="stackframe">stackframe</h1>
-            <h2>Generate artificial backtrace by walking arguments.callee.caller chain</h2>
+            <h2>JS Object representation of a stack frame</h2>
             <p class="shields"><iframe src="http://ghbtns.com/github-btn.html?user=stacktracejs&repo=stackframe&type=star&count=true" frameborder="0" scrolling="0" width="77px" height="20px"></iframe><a href="https://travis-ci.org/stacktracejs/stackframe"><img src="https://travis-ci.org/stacktracejs/stackframe.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stackframe?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/stackframe.svg" alt="Coverage Status"></a> <a href="https://codeclimate.com/github/stacktracejs/stackframe"><img src="https://codeclimate.com/github/stacktracejs/stackframe/badges/gpa.svg" alt="Code Climate"></a></p>
             <p>Underlies functionality of other modules within <a href="http://www.stacktracejs.com">stacktrace.js</a>.</p>
             <p>Written to closely resemble StackFrame representations in <a href="http://mxr.mozilla.org/mozilla-central/source/xpcom/base/nsIException.idl#14">Gecko</a> and <a href="https://code.google.com/p/v8-wiki/wiki/JavaScriptStackTraceApi">V8</a></p>
@@ -509,6 +576,11 @@ stackFrame.getLineNumber()    // =&gt; 325
 stackFrame.columnNumber       // =&gt; 3288
 stackFrame.setColumnNumber(20)
 stackFrame.getColumnNumber()  // =&gt; 20
+
+stackFrame.source             // =&gt; &#39;ORIGINAL_STACK_LINE&#39;
+stackFrame.setSource(&#39;NEW_SOURCE&#39;)
+stackFrame.getSource()        // =&gt; &#39;NEW_SOURCE&#39;
+
 
 stackFrame.toString()         // =&gt; 'funName(args)@http://localhost:3000/file.js:325:20'
 </code></pre>

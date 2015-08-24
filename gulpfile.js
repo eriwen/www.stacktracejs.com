@@ -121,6 +121,12 @@ gulp.task('generate-docs', function () {
   });
 });
 
+gulp.task('generate-migration-guide', function () {
+  gulp.src(['../stacktrace.js/MIGRATION_GUIDE.md'])
+    .pipe($.markdown())
+    .pipe(gulp.dest('docs/v0-migration-guide'));
+});
+
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
   return gulp.src(['app/fonts/**'])
