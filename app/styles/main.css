@@ -204,6 +204,9 @@ figure {
 .api-docs #api~h4, .api-docs #api~h4 code {
   font-family: Menlo, Monaco, Consolas, Lucida Console, dejavu sans mono, monospace;
   font-size: 1.3rem;
+}
+
+.api-docs h4 {
   margin-bottom: 0;
 }
 
