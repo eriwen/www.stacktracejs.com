@@ -15,6 +15,7 @@
   "undef": true,
   "unused": true,
   "globals": {
+    "ErrorStackParser": true,
     "wrap": true,
     "unwrap": true,
     "Polymer": true,
