@@ -10,6 +10,7 @@
   "indent": 2,
   "latedef": true,
   "noarg": true,
+  "evil": true,
   "quotmark": "single",
   "undef": true,
   "unused": true,

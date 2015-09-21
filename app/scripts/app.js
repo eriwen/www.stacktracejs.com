@@ -24,6 +24,36 @@
       mainToolbar.className = '';
     });
 
+    document.body.addEventListener('st:try-show', function (stackframes) {
+      var outputArea = document.querySelector('#try-get textarea:last-of-type');
+      outputArea.value = stackframes.map(function (sf) {
+        sf.toString();
+      }).join('\n');
+    });
+
+    document.body.addEventListener('st:try-error', function (evt) {
+      var error = evt.detail;
+      var stringified = ErrorStackParser.parse(error).map(function (sf) {
+        return sf.toString();
+      }).join('\n');
+
+      var outputArea = document.querySelector('#try-get textarea:last-of-type');
+      outputArea.value = 'Got an Error:' + error.message + '\n' +
+        'stacktrace:\n' + stringified + '\n\n' +
+        'If you think this shouldn\'t have happened, please file an issue at' +
+        'http://git.io/stacktracejs';
+    });
+
+    document.querySelector('#try-get').addEventListener('click', function () {
+      var textarea = document.querySelector('#try-get textarea:first-of-type');
+      try {
+        eval(textarea.innerText);
+      } catch (e) {
+        var customEvent = new CustomEvent('st:try-error', {detail: e});
+        document.body.dispatchEvent(customEvent);
+      }
+    });
+
     // Run syntax highlighter
     var codeElements = document.querySelectorAll('.lang-js');
     [].forEach.call(codeElements, function (el) {

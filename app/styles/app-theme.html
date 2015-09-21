@@ -121,17 +121,24 @@
     color: var(--primary-text-color);
   }
 
+  .main-nav {
+    display: flex;
+    align-items: center;
+  }
   .main-nav a {
-    padding: 5px;
+    padding: 6px;
+  }
+  .main-nav a:hover {
+    text-decoration: underline;
   }
   .main-nav path {
     fill: var(--secondary-text-color);
     transition: fill 0.25s ease-out;
   }
-  .main-nav a:first-of-type:hover path {
+  .main-nav a:nth-last-of-type(2):hover path {
     fill: var(--default-primary-color);
   }
-  .main-nav a:hover path {
+  .main-nav a:last-of-type:hover path {
     fill: var(--accent-color);
   }
 

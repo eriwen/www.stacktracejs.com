@@ -246,3 +246,21 @@ pre .token.punctuation {
   margin: 0.5rem 0;
   padding-left: 2rem;
 }
+
+/* Live Demo */
+.try-demo {
+  position: relative;
+}
+
+.try-demo pre {
+  border: 1px dashed #ccc;
+  /*box-sizing: border-box;*/
+  /*margin: 0 10px;*/
+  /*overflow-x: scroll;*/
+}
+
+.try-demo .execute-demo-button {
+  position: absolute;
+  right: calc(50% - 28px);
+  top: 30px;
+}
