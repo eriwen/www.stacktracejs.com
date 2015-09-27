@@ -25,7 +25,8 @@
     });
 
     document.body.addEventListener('st:try-show', function (stackframes) {
-      var outputArea = document.querySelector('#try-get textarea:last-of-type');
+      var outputArea = document.querySelector('#try-get pre:last-of-type');
+      console.log(stackframes);
       outputArea.value = stackframes.map(function (sf) {
         sf.toString();
       }).join('\n');
@@ -37,7 +38,7 @@
         return sf.toString();
       }).join('\n');
 
-      var outputArea = document.querySelector('#try-get textarea:last-of-type');
+      var outputArea = document.querySelector('#try-get pre:last-of-type');
       outputArea.value = 'Got an Error:' + error.message + '\n' +
         'stacktrace:\n' + stringified + '\n\n' +
         'If you think this shouldn\'t have happened, please file an issue at' +
@@ -45,7 +46,7 @@
     });
 
     document.querySelector('#try-get').addEventListener('click', function () {
-      var textarea = document.querySelector('#try-get textarea:first-of-type');
+      var textarea = document.querySelector('#try-get pre:first-of-type');
       try {
         eval(textarea.innerText);
       } catch (e) {
