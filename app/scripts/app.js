@@ -55,6 +55,12 @@
       }
     });
 
+    document.querySelector('#hero-download').addEventListener('click', function () {
+      if (typeof ga === 'function') {
+        ga('send', 'event', 'Downloads', 'Click', 'Hero Download');
+      }
+    });
+
     // Run syntax highlighter
     var codeElements = document.querySelectorAll('.lang-js');
     [].forEach.call(codeElements, function (el) {

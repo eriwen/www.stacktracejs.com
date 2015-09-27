@@ -127,7 +127,7 @@
               </header>
               <div class="hero-content">
                 <p>
-                  <a href="https://github.com/stacktracejs/stacktrace.js/releases"><paper-button role="button" raised>
+                  <a href="https://github.com/stacktracejs/stacktrace.js/releases"><paper-button id="hero-download" role="button" raised>
                       <paper-ripple></paper-ripple>
                       <iron-icon icon="file-download"></iron-icon>
                       <span class="hero-button-text">Get stacktrace.js</span>
@@ -160,12 +160,11 @@
                     <a href="http://edub.me/stacktracejs-dev">development</a> versions directly from GitHub.</p>
                 </figcaption>
                 <pre class="code lang-js">
-
 npm install stacktrace-js
+
 bower install stacktrace-js
-component install stacktrace-js
-//cdnjs.com/libraries/stacktrace.js
-                </pre>
+
+//cdnjs.com/libraries/stacktrace.js</pre>
               </figure>
 
               <figure class="layout horizontal">
@@ -202,8 +201,7 @@ StackTrace.get()
 var stackframes = [...];
 var url = 'https://yourapp.com/path';
 
-StackTrace.report(stackframes, url);
-                </pre>
+StackTrace.report(stackframes, url);</pre>
               </figure>
             </div>
 
