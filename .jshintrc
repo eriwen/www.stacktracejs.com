@@ -1,7 +1,6 @@
 {
   "node": true,
   "browser": true,
-  "esnext": true,
   "bitwise": true,
   "camelcase": true,
   "curly": true,
@@ -10,10 +9,10 @@
   "indent": 2,
   "latedef": true,
   "noarg": true,
-  "evil": true,
   "quotmark": "single",
   "undef": true,
   "unused": true,
+  "newcap": false,
   "globals": {
     "ErrorStackParser": true,
     "wrap": true,

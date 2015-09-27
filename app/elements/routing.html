@@ -1,19 +1,24 @@
-<script src="../../bower_components/page/page.js"></script>
+<script src="../bower_components/page/page.js"></script>
 <script>
   window.addEventListener('WebComponentsReady', function () {
+    function scrollToTop(ctx, next) {
+      app.scrollPageToTop();
+      next();
+    }
+
     page('/', function () {
       app.route = 'home';
       document.body.dispatchEvent(new CustomEvent('st:hide-docs'));
     });
 
-    page('/try', function () {
+    page('/try', scrollToTop, function () {
       app.route = 'try';
       document.body.dispatchEvent(new CustomEvent('st:hide-docs'));
     });
 
     // Docs pages
     ['stacktrace-js', 'stacktrace-gps', 'error-stack-parser', 'stack-generator', 'stackframe', 'v0-migration-guide'].forEach(function(url) {
-      page('/docs/' + url, function () {
+      page('/docs/' + url, scrollToTop, function () {
         app.route = url;
         document.body.dispatchEvent(new CustomEvent('st:show-docs'));
       });
