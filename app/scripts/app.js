@@ -61,16 +61,6 @@
       }
     });
 
-    // Run syntax highlighter
-    var codeElements = document.querySelectorAll('.lang-js');
-    [].forEach.call(codeElements, function (el) {
-      var event = new CustomEvent('syntax-highlight', {
-        detail: {lang: 'js', code: el.textContent}
-      });
-      document.body.dispatchEvent(event);
-      el.innerHTML = event.detail.code;
-    });
-
     // Twitter Button code
     var fjs = document.getElementsByTagName('script')[0];
     if (!document.getElementById('twitter-wjs')) {
@@ -83,6 +73,15 @@
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function () {
+    // Run syntax highlighter
+    var codeElements = document.querySelectorAll('.lang-js');
+    [].forEach.call(codeElements, function (el) {
+      var event = new CustomEvent('syntax-highlight', {
+        detail: {lang: 'js', code: el.textContent}
+      });
+      document.body.dispatchEvent(event);
+      el.innerHTML = event.detail.code;
+    });
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
@@ -91,10 +90,5 @@
     if (drawerPanel.narrow) {
       drawerPanel.closeDrawer();
     }
-  };
-
-  // Scroll page to top and expand header
-  app.scrollPageToTop = function() {
-    document.getElementById('mainContainer').scrollTop = 0;
   };
 })(document);

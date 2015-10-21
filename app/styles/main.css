@@ -107,6 +107,7 @@ h4 {
   cursor: text;
   flex: 0 0 330px;
   margin: 0;
+  overflow: hidden;
   padding: 10px;
 }
 

@@ -39,7 +39,6 @@
   }
 
   /* General styles */
-  /*TODO: test perf after vulcanize*/
   a {
     color: var(--dark-primary-color);
     text-decoration: none;
@@ -186,6 +185,9 @@
   @media (max-width: 480px) {
     .app-title svg:last-of-type {
       display: none;
+    }
+    .app-title svg:first-of-type {
+      vertical-align: baseline;
     }
   }
 

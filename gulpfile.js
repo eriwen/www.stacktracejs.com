@@ -183,6 +183,19 @@ gulp.task('html', function () {
     'dist');
 });
 
+// Vulcanize granular configuration
+gulp.task('vulcaniz', function () {
+  var DEST_DIR = 'dist/elements';
+  return gulp.src('dist/elements/elements.vulcanized.html')
+    .pipe($.vulcanize({
+      stripComments: true,
+      inlineCss: true,
+      inlineScripts: true
+    }))
+    .pipe(gulp.dest(DEST_DIR))
+    .pipe($.size({title: 'vulcanize'}));
+});
+
 // Polybuild will take care of inlining HTML imports,
 // scripts and CSS for you.
 gulp.task('vulcanize', function () {
@@ -306,7 +319,7 @@ gulp.task('default', ['clean'], function (cb) {
     ['copy', 'styles'],
     'elements',
     ['jshint', 'images', 'fonts', 'html'],
-    'vulcanize','rename-index', // 'cache-config',
+    'vulcanize', // 'cache-config',
     cb);
 });
 
