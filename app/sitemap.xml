@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
+?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.stacktracejs.com/</loc>
+    <loc>https://www.stacktracejs.com/</loc>
     <lastmod>2015-09-27</lastmod>
   </url>
   <url>
-    <loc>http://www.stacktracejs.com/#!/docs/stacktrace-js</loc>
+    <loc>https://www.stacktracejs.com/#!/docs/stacktrace-js</loc>
     <lastmod>2015-09-27</lastmod>
   </url>
   <url>
-    <loc>http://www.stacktracejs.com/#!/docs/stacktrace-gps</loc>
+    <loc>https://www.stacktracejs.com/#!/docs/stacktrace-gps</loc>
     <lastmod>2015-09-27</lastmod>
   </url>
   <url>
-    <loc>http://www.stacktracejs.com/#!/docs/error-stack-parser</loc>
+    <loc>https://www.stacktracejs.com/#!/docs/error-stack-parser</loc>
     <lastmod>2015-09-27</lastmod>
   </url>
   <url>
-    <loc>http://www.stacktracejs.com/#!/docs/stack-generator</loc>
+    <loc>https://www.stacktracejs.com/#!/docs/stack-generator</loc>
     <lastmod>2015-09-27</lastmod>
   </url>
   <url>
-    <loc>http://www.stacktracejs.com/#!/docs/stackframe</loc>
+    <loc>https://www.stacktracejs.com/#!/docs/stackframe</loc>
     <lastmod>2015-09-27</lastmod>
   </url>
   <url>
-    <loc>http://www.stacktracejs.com/#!/docs/v0-migration-guide</loc>
+    <loc>https://www.stacktracejs.com/#!/docs/v0-migration-guide</loc>
     <lastmod>2015-09-27</lastmod>
   </url>
 </urlset>
