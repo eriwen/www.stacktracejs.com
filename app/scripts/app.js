@@ -66,7 +66,7 @@
     if (!document.getElementById('twitter-wjs')) {
       var js = document.createElement('script');
       js.id = 'twitter-wjs';
-      js.src = 'http://platform.twitter.com/widgets.js';
+      js.src = 'https://platform.twitter.com/widgets.js';
       fjs.parentNode.insertBefore(js, fjs);
     }
   });
