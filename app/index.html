@@ -203,8 +203,9 @@ StackTrace.get()
 
 var stackframes = [...];
 var url = 'https://yourapp.com/path';
+var message = 'Boom. Error Message';
 
-StackTrace.report(stackframes, url);</pre>
+StackTrace.report(stackframes, url, message);</pre>
               </figure>
             </div>
 
@@ -458,10 +459,11 @@ https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.0.0/stacktrace.min.js
             <ul>
               <li><strong>fn: Function</strong> - Instrumented Function</li>
             </ul>
-            <h4 id="-stacktrace-report-stackframes-url-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-string-"><code>StackTrace.report(stackframes, url)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(String)</h4>
+            <h4 id="-stacktrace-report-stackframes-url-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-string-"><code>StackTrace.report(stackframes, url, message)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(String)</h4>
             <p>Given an Array of StackFrames, serialize and POST to given URL. Promise is resolved with response text from POST request.</p>
             <p>Example JSON POST data:</p>
 <pre><code>{
+  message: &#39;error message&#39;,
   stack: [
     {functionName: &#39;fn&#39;, fileName: &#39;file.js&#39;, lineNumber: 32, columnNumber: 1},
     {functionName: &#39;fn2&#39;, fileName: &#39;file.js&#39;, lineNumber: 543, columnNumber: 32},
