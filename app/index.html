@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" itemscope itemtype="https://schema.org/WebPage">
 
 <head>
   <meta charset="utf-8">
@@ -62,36 +62,36 @@
       </paper-toolbar>
 
       <!-- Drawer Content -->
-      <paper-menu id="api-docs-menu" class="list" role="menu" attr-for-selected="data-route" selected="{{route}}" on-iron-activate="onMenuSelect">
+      <paper-menu id="api-docs-menu" class="list" role="menu" attr-for-selected="data-route" selected="{{route}}" on-iron-activate="onMenuSelect" itemscope itemtype="https://schema.org/SiteNavigationElement">
         <paper-item data-route="stacktrace-js">
-          <a href="#!/docs/stacktrace-js">
-            <!--FIXME: actual stacktrace icon using https://elements.polymer-project.org/elements/iron-iconset-svg-->
+          <a itemprop="url" href="#!/docs/stacktrace-js">
+            <!--TODO: actual stacktrace icon using https://elements.polymer-project.org/elements/iron-iconset-svg-->
             <iron-icon icon="filter-list"></iron-icon>
-            <span>stacktrace.js</span>
+            <span itemprop="name">stacktrace.js</span>
           </a>
         </paper-item>
         <paper-item data-route="stacktrace-gps">
-          <a href="#!/docs/stacktrace-gps">
+          <a itemprop="url" href="#!/docs/stacktrace-gps">
             <iron-icon icon="room"></iron-icon>
-            <span>stacktrace-gps</span>
+            <span itemprop="name">stacktrace-gps</span>
           </a>
         </paper-item>
         <paper-item data-route="error-stack-parser">
-          <a href="#!/docs/error-stack-parser">
+          <a itemprop="url" href="#!/docs/error-stack-parser">
             <iron-icon icon="speaker-notes"></iron-icon>
-            <span>error-stack-parser</span>
+            <span itemprop="name">error-stack-parser</span>
           </a>
         </paper-item>
         <paper-item data-route="stack-generator">
-          <a href="#!/docs/stack-generator">
+          <a itemprop="url" href="#!/docs/stack-generator">
             <iron-icon icon="subject"></iron-icon>
-            <span>stack-generator</span>
+            <span itemprop="name">stack-generator</span>
           </a>
         </paper-item>
         <paper-item data-route="stackframe">
-          <a href="#!/docs/stackframe">
+          <a itemprop="url" href="#!/docs/stackframe">
             <iron-icon icon="remove"></iron-icon>
-            <span>stackframe</span>
+            <span itemprop="name">stackframe</span>
           </a>
         </paper-item>
       </paper-menu>
@@ -105,7 +105,7 @@
     </paper-header-panel>
 
     <!-- Main Toolbar -->
-    <paper-header-panel main mode="waterfall">
+    <paper-header-panel main mode="waterfall" itemscope itemtype="https://schema.org/WPHeader">
       <paper-toolbar id="main-toolbar">
         <a href="#!" class="app-title">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><path fill="#00A1A0" d="M4 106h504l-36 72H40"/><path fill="#FF6618" d="M40 322h432l-36 72H292l-36 45-36-45H76"/><path fill="#00A1A0" d="M22 214l36 72h396l36-72"/></svg>
@@ -151,7 +151,7 @@
               </header>
 
               <figure class="layout horizontal">
-                <div class="logo-step-img">
+                <div class="logo-step-img" itemscope itemtype="https://schema.org/ImageObject">
                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 512 512"><path fill="#00A1A0" d="M4 106h504l-36 72H40 z"/><path stroke="#FF6618" fill="#FFFFFF" d="M40 322h432l-36 72H292l-36 45-36-45H76 z"/><path stroke="#00A1A0" fill="#FFFFFF" d="M22 214l36 72h396l36-72 z"/></svg>
                 </div>
                 <figcaption class="flex">
@@ -234,7 +234,7 @@ StackTrace.report(stackframes, url, message);</pre>
               </div>
             </div>
 
-            <footer class="home-footer bg-accent">
+            <footer class="home-footer bg-accent" itemscope itemtype="https://schema.org/WPFooter">
               <div class="content">
                 <p>
                   <iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=stacktrace.js&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
@@ -697,6 +697,14 @@ https://raw.githubusercontent.com/stacktracejs/stackframe/master/dist/stackframe
   ga('create', 'UA-15897750-2', 'auto');
   ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "https://www.stacktracejs.com",
+  "name": "StackTrace.JS",
+}
 </script>
 </body>
 
