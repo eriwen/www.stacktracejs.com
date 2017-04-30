@@ -1,9 +1,10 @@
 <h1 id="stacktrace-gps-turn-partial-code-location-into-precise-code-location">stacktrace-gps - Turn partial code location into precise code location</h1>
-<p><a href="https://travis-ci.org/stacktracejs/stacktrace-gps"><img src="https://travis-ci.org/stacktracejs/stacktrace-gps.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stacktrace-gps"><img src="https://img.shields.io/coveralls/stacktracejs/stacktrace-gps.svg" alt="Coverage Status"></a> <a href="https://codeclimate.com/github/stacktracejs/stacktrace-gps"><img src="https://codeclimate.com/github/stacktracejs/stacktrace-gps/badges/gpa.svg" alt="Code Climate"></a></p>
-<p>This library accepts a code location (in the form of a <a href="https://github.com/stacktracejs/stackframe">StackFrame</a>) and 
+<p><a href="https://travis-ci.org/stacktracejs/stacktrace-gps"><img src="https://travis-ci.org/stacktracejs/stacktrace-gps.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stacktrace-gps"><img src="https://img.shields.io/coveralls/stacktracejs/stacktrace-gps.svg" alt="Coverage Status"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/stacktracejs/stacktrace-gps.svg" alt="GitHub license"></a></p>
+<p>This library accepts a code location (in the form of a <a href="https://github.com/stacktracejs/stackframe">StackFrame</a>) and
 returns a new StackFrame with a more accurate location (using <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a>) and guessed function names.</p>
+<p>This is primarily a browser-centric library, but can be used with node.js. See the <a href="#offline-usage">Offline Usage section</a> below.</p>
 <h2 id="usage">Usage</h2>
-<pre><code class="lang-js">var stackframe = new StackFrame(undefined, [], &#39;http://localhost:3000/file.min.js&#39;, 1, 3284);
+<pre><code class="lang-js">var stackframe = new StackFrame({fileName: &#39;http://localhost:3000/file.min.js&#39;, lineNumber: 1, columnNumber: 3284});
 var callback = function myCallback(foundFunctionName) { console.log(foundFunctionName); };
 
 // Such meta. Wow
@@ -13,15 +14,31 @@ var gps = new StackTraceGPS();
 
 // Pinpoint actual function name and source-mapped location
 gps.pinpoint(stackframe).then(callback, errback);
-=&gt; Promise(StackFrame(&#39;fun&#39;, [], &#39;file.js&#39;, 203, 9), Error)
+//===&gt; Promise(StackFrame({functionName: &#39;fun&#39;, fileName: &#39;file.js&#39;, lineNumber: 203, columnNumber: 9}), Error)
 
 // Better location/name information from source maps
 gps.getMappedLocation(stackframe).then(callback, errback);
-=&gt; Promise(StackFrame(undefined, [], &#39;file.js&#39;, 203, 9), Error)
+//===&gt; Promise(StackFrame({fileName: &#39;file.js&#39;, lineNumber: 203, columnNumber: 9}), Error)
 
 // Get function name from location information
 gps.findFunctionName(stackframe).then(callback, errback);
-=&gt; Promise(StackFrame(&#39;fun&#39;, [], &#39;http://localhost:3000/file.min.js&#39;, 1, 3284), Error)
+//===&gt; Promise(StackFrame({functionName: &#39;fun&#39;, fileName: &#39;http://localhost:3000/file.min.js&#39;, lineNumber: 1, columnNumber: 3284}), Error)
+</code></pre>
+<h3 id="offline-usage">Offline Usage</h3>
+<p>With a bit of preparation, you can use this library offline in any environment. Any encountered fileNames not in the cache return resolved
+Promises with the original StackFrame. StackTraceGPS will make a best effort to provide as good of response with what is given and will
+fallback to the original StackFrame if nothing better could be found.</p>
+<pre><code class="lang-js">var stack = ErrorStackParser.parse(new Error(&#39;boom&#39;));
+console.assert(stack[0] == new StackFrame({fileName: &#39;http://localhost:9999/file.min.js&#39;, lineNumber: 1, columnNumber: 32}));
+
+var sourceCache = {&#39;http://localhost:9999/file.min.js&#39;: &#39;var foo=function(){};function bar(){}var baz=eval(&quot;XXX&quot;);\n//# sourceMappingURL=file.js.map&#39;};
+var sourceMap = &#39;{&quot;version&quot;:3,&quot;sources&quot;:[&quot;./file.js&quot;],&quot;sourceRoot&quot;:&quot;http://localhost:4000/&quot;,&quot;names&quot;:[&quot;foo&quot;,&quot;bar&quot;,&quot;baz&quot;,&quot;eval&quot;],&quot;mappings&quot;:&quot;AAAA,GAAIA,KAAM,YACV,SAASC,QACT,GAAIC,KAAMC,KAAK&quot;,&quot;file&quot;:&quot;file.min.js&quot;}&#39;;
+var sourceMapConsumerCache = {&#39;http://localhost:4000/file.js.map&#39;: new SourceMap.SourceMapConsumer(sourceMap)};
+
+var gps = new StackTraceGPS({offline: true, sourceCache: sourceCache, sourceMapConsumerCache: sourceMapConsumerCache});
+gps.pinpoint(stack[0]).then(function(betterStackFrame) {
+    console.assert(betterStackFrame === new StackFrame({functionName: &#39;bar&#39;, fileName: &#39;http://localhost:9999/file.js&#39;, lineNumber: 2, columnNumber: 9}));
+});
 </code></pre>
 <h2 id="installation">Installation</h2>
 <pre><code>npm install stacktrace-gps
@@ -31,13 +48,16 @@ https://raw.githubusercontent.com/stacktracejs/stacktrace-gps/master/dist/stackt
 <h4 id="-new-stacktracegps-optional-options-stacktracegps"><code>new StackTraceGPS(/*optional*/ options)</code> =&gt; StackTraceGPS</h4>
 <p>options: Object</p>
 <ul>
-<li><strong>sourceCache: Object (String URL =&gt; String Source)</strong> - Pre-populate source cache to avoid network requests</li>
+<li><strong>sourceCache: Object (String URL : String Source)</strong> - Pre-populate source cache to avoid network requests</li>
+<li><strong>sourceMapConsumerCache: Object (Source Mapping URL : SourceMap.SourceMapConsumer)</strong> - Pre-populate source cache to avoid network requests</li>
 <li><strong>offline: Boolean (default false)</strong> - Set to <code>true</code> to prevent all network requests</li>
+<li><strong>ajax: Function (String URL =&gt; Promise(responseText))</strong> - Function to be used for making X-Domain requests</li>
+<li><strong>atob: Function (String =&gt; String)</strong> - Function to convert base64-encoded strings to their original representation</li>
 </ul>
 <h4 id="-pinpoint-stackframe-promise-stackframe-"><code>.pinpoint(stackframe)</code> =&gt; Promise(StackFrame)</h4>
 <p>Enhance function name and use source maps to produce a better StackFrame.</p>
 <ul>
-<li><strong>stackframe</strong> - <a href="https://github.com/stacktracejs/stackframe">StackFrame</a> or like object 
+<li><strong>stackframe</strong> - <a href="https://github.com/stacktracejs/stackframe">StackFrame</a> or like object
 e.g. {fileName: &#39;path/to/file.js&#39;, lineNumber: 100, columnNumber: 5}</li>
 </ul>
 <h4 id="-findfunctionname-stackframe-promise-stackframe-"><code>.findFunctionName(stackframe)</code> =&gt; Promise(StackFrame)</h4>
@@ -51,18 +71,8 @@ e.g. {fileName: &#39;path/to/file.js&#39;, lineNumber: 100, columnNumber: 5}</li
 <li><strong>stackframe</strong> - <a href="https://github.com/stacktracejs/stackframe">StackFrame</a> or like object</li>
 </ul>
 <h2 id="browser-support">Browser Support</h2>
+<p><a href="https://saucelabs.com/u/stacktracejs"><img src="https://saucelabs.com/browser-matrix/stacktracejs.svg" alt="Sauce Test Status"></a></p>
 <p>Functions that rely on <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">Source Maps</a>
-(<code>pinpoint</code> and <code>getMappedLocation</code>) require recent browsers:</p>
-<ul>
-<li>Chrome 20+</li>
-<li>Firefox 23+</li>
-<li>Safari 8+</li>
-<li>Opera 24+</li>
-<li>IE 9+</li>
-<li>iOS 7+</li>
-<li>Android 4.2+</li>
-</ul>
+(<code>pinpoint</code> and <code>getMappedLocation</code>) require recent browsers.</p>
 <h2 id="contributing">Contributing</h2>
 <p>Want to be listed as a <em>Contributor</em>? Start with the <a href="CONTRIBUTING.md">Contributing Guide</a>!</p>
-<h2 id="license">License</h2>
-<p>This project is licensed to the <a href="http://unlicense.org">Public Domain</a></p>

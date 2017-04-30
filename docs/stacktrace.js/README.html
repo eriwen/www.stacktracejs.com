@@ -1,26 +1,43 @@
 <h1 id="stacktrace-js">stacktrace.js</h1>
-<h2 id="framework-agnostic-micro-library-for-getting-stack-traces-in-all-web-browsers">Framework-agnostic, micro-library for getting stack traces in all web browsers</h2>
-<p><a href="https://travis-ci.org/stacktracejs/stacktrace.js"><img src="https://travis-ci.org/stacktracejs/stacktrace.js.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stacktrace.js?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/stacktrace.js.svg" alt="Coverage Status"></a> <a href="https://codeclimate.com/github/stacktracejs/stacktrace.js"><img src="https://codeclimate.com/github/stacktracejs/stacktrace.js/badges/gpa.svg" alt="Code Climate"></a></p>
+<p>Generate, parse and enhance JavaScript stack traces in all browsers</p>
+<p><a href="https://travis-ci.org/stacktracejs/stacktrace.js"><img src="https://img.shields.io/travis/stacktracejs/stacktrace.js/master.svg?style=flat-square" alt="Build Status"></a> 
+<a href="https://coveralls.io/r/stacktracejs/stacktrace.js?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/stacktrace.js.svg?style=flat-square" alt="Coverage Status"></a> 
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/stacktracejs/stacktrace.js.svg?style=flat-square" alt="GitHub license"></a>
+<a href="https://cdnjs.com/libraries/stacktrace.js"><img src="https://img.shields.io/cdnjs/v/stacktrace.js.svg?style=flat-square" alt="CDNJS"></a>
+<a href="https://github.com/stacktracejs/stacktrace.js/releases"><img src="https://img.shields.io/badge/size-29.9k-green.svg?style=flat-square" alt="size with dependencies"></a>
+<a href="https://github.com/stacktracejs/stacktrace.js/releases"><img src="https://img.shields.io/badge/gzipped-9.1k-green.svg?style=flat-square" alt="gzip size"></a>
+<a href="https://github.com/stacktracejs/stacktrace.js/releases"><img src="https://img.shields.io/badge/module%20format-umd-lightgrey.svg?style=flat-square&amp;colorB=ff69b4" alt="module format"></a></p>
 <p>Debug and profile your JavaScript with a <a href="http://en.wikipedia.org/wiki/Stack_trace">stack trace</a> of function calls leading to an error (or any condition you specify).</p>
-<p>stacktrace.js uses browsers&#39; <code>Error.stack</code> mechanism to generate stack traces, parses them, enhances them with 
-<a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a> and uses 
+<p>stacktrace.js uses browsers&#39; <code>Error.stack</code> mechanism to generate stack traces, parses them, enhances them with
+<a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a> and uses
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a>
 to return an Array of <a href="https://github.com/stacktracejs/stackframe">StackFrames</a>.</p>
-<h4 id="upgrading-check-the-0-x-1-x-migration-guide-http-www-stacktracejs-com-docs-v0-migration-guide-">Upgrading? Check the <a href="http://www.stacktracejs.com/docs/v0-migration-guide">0.x -&gt; 1.x Migration Guide</a></h4>
+<h4 id="upgrading-check-the-0-x-1-x-migration-guide-https-www-stacktracejs-com-docs-v0-migration-guide-">Upgrading? Check the <a href="https://www.stacktracejs.com/#!/docs/v0-migration-guide">0.x -&gt; 1.x Migration Guide</a></h4>
 <h2 id="usage">Usage</h2>
 <h4 id="get-a-stack-trace-from-current-location">Get a stack trace from current location</h4>
 <pre><code class="lang-js">var callback = function(stackframes) {
-    var stringifiedStack = stackframes.map(function(sf) { 
-        return sf.toString(); 
-    }).join(&#39;\n&#39;); 
-    console.log(stringifiedStack); 
+    var stringifiedStack = stackframes.map(function(sf) {
+        return sf.toString();
+    }).join(&#39;\n&#39;);
+    console.log(stringifiedStack);
 };
 
 var errback = function(err) { console.log(err.message); };
 
-StackTrace.get().then(callback).catch(errback)
-=&gt; Promise(Array[StackFrame], Error)
-=&gt; callback([StackFrame(&#39;func1&#39;, [], &#39;file.js&#39;, 203, 9), StackFrame(&#39;func2&#39;, [], &#39;http://localhost:3000/file.min.js&#39;, 1, 3284)])
+StackTrace.get().then(callback).catch(errback);
+//===&gt; Promise(Array[StackFrame], Error)
+//===&gt; callback([
+//    StackFrame({functionName: &#39;func1&#39;, args: [], fileName: &#39;file.js&#39;, lineNumber: 203, columnNumber: 9}), 
+//    StackFrame({functionName: &#39;func2&#39;, args: [], fileName: &#39;http://localhost:3000/file.min.js&#39;, lineNumber: 1, columnNumber: 3284})
+//])
+</code></pre>
+<h4 id="you-can-also-get-a-stack-trace-synchronously">You can also get a stack trace synchronously</h4>
+<p><strong>HEADS UP:</strong> This method does not resolve source maps or guess anonymous function names.</p>
+<pre><code class="lang-js">StackTrace.getSync();
+//==&gt; [
+//      StackFrame({functionName: &#39;func1&#39;, args: [], fileName: &#39;file.js&#39;, lineNumber: 203, columnNumber: 9}), 
+//      StackFrame({functionName: &#39;func2&#39;, args: [], fileName: &#39;http://localhost:3000/file.min.js&#39;, lineNumber: 1, columnNumber: 3284})
+//]
 </code></pre>
 <h4 id="window-onerror-integration">window.onerror integration</h4>
 <p>Automatically handle errors</p>
@@ -30,24 +47,27 @@ StackTrace.get().then(callback).catch(errback)
 };
 </code></pre>
 <h4 id="get-stack-trace-from-an-error">Get stack trace from an Error</h4>
-<pre><code class="lang-js">var error = new Error(&#39;BOOM!&#39;); 
+<pre><code class="lang-js">var error = new Error(&#39;BOOM!&#39;);
 
-StackTrace.fromError(error).then(callback).catch(errback)
-=&gt; Promise(Array[StackFrame], Error)
+StackTrace.fromError(error).then(callback).catch(errback);
+//===&gt; Promise(Array[StackFrame], Error)
 </code></pre>
 <h4 id="generate-a-stacktrace-from-walking-arguments-callee">Generate a stacktrace from walking arguments.callee</h4>
 <p>This might capture arguments information, but isn&#39;t supported in ES5 strict-mode</p>
-<pre><code class="lang-js">StackTrace.generateArtificially().then(callback).catch(errback)
-=&gt; Promise(Array[StackFrame], Error)
+<pre><code class="lang-js">StackTrace.generateArtificially().then(callback).catch(errback);
+//===&gt; Promise(Array[StackFrame], Error)
 </code></pre>
 <h4 id="trace-every-time-a-given-function-is-invoked">Trace every time a given function is invoked</h4>
-<pre><code class="lang-js">// callback is called with an Array[StackFrame] every time  
-// the wrapped interestingFn is called
-StackTrace.instrument(interestingFn, callback, errback)
-=&gt; Instrumented Function
+<pre><code class="lang-js">// callback is called with an Array[StackFrame] every time wrapped function is called
+var myFunc = function(arg) { return &#39;Hello &#39; + arg; };
+var myWrappedFunc = StackTrace.instrument(myFunc, callback, errback);
+//===&gt; Instrumented Function
+myWrappedFunc(&#39;world&#39;);
+//===&gt; &#39;Hello world&#39;
 
-StackTrace.deinstrument(interestingFn)
-=&gt; De-instrumented Function
+// Use this if you overwrote you original function
+myFunc = StackTrace.deinstrument(myFunc);
+//===&gt; De-instrumented Function
 </code></pre>
 <h2 id="get-stacktrace-js">Get stacktrace.js</h2>
 <pre><code>npm install stacktrace-js
@@ -59,9 +79,15 @@ http://cdnjs.com/libraries/stacktrace.js
 <p>Generate a backtrace from invocation point, then parse and enhance it.</p>
 <p><strong>(Optional) options: Object</strong></p>
 <ul>
-<li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a> =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code> </li>
+<li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a> =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code></li>
 <li><em>sourceCache: Object (String URL =&gt; String Source)</em> - Pre-populate source cache to avoid network requests</li>
 <li><em>offline: Boolean (default: false)</em> - Set to <code>true</code> to prevent all network requests</li>
+</ul>
+<h4 id="-stacktrace-getsync-optional-options-array-stackframe-https-github-com-stacktracejs-stackframe-"><code>StackTrace.getSync(/*optional*/ options)</code> =&gt; Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>]</h4>
+<p>Generate a backtrace from invocation point, then parse it. This method does not use source maps or guess anonymous functions.  </p>
+<p><strong>(Optional) options: Object</strong></p>
+<ul>
+<li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a> =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code></li>
 </ul>
 <h4 id="-stacktrace-fromerror-error-optional-options-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-array-stackframe-https-github-com-stacktracejs-stackframe-"><code>StackTrace.fromError(error, /*optional*/ options)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>])</h4>
 <p>Given an Error object, use <a href="https://github.com/stacktracejs/error-stack-parser">error-stack-parser</a>
@@ -88,7 +114,7 @@ to parse it and enhance location information with <a href="https://github.com/st
 <li><p><strong>fn: Function</strong> - to wrap, call callback on invocation and call-through</p>
 </li>
 <li><strong>callback: Function</strong> - to call with stack trace (generated by <code>StackTrace.get()</code>) when fn is called</li>
-<li><strong>(Optional) errback: Function</strong> - to call with Error object if there was a problem getting a stack trace. 
+<li><strong>(Optional) errback: Function</strong> - to call with Error object if there was a problem getting a stack trace.
 Fails silently (though <code>fn</code> is still called) if a stack trace couldn&#39;t be generated.</li>
 </ul>
 <h4 id="-stacktrace-deinstrument-fn-function"><code>StackTrace.deinstrument(fn)</code> =&gt; Function</h4>
@@ -96,10 +122,11 @@ Fails silently (though <code>fn</code> is still called) if a stack trace couldn&
 <ul>
 <li><strong>fn: Function</strong> - Instrumented Function</li>
 </ul>
-<h4 id="-stacktrace-report-stackframes-url-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-string-"><code>StackTrace.report(stackframes, url)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(String)</h4>
-<p>Given an Array of StackFrames, serialize and POST to given URL. Promise is resolved with response text from POST request.</p>
+<h4 id="-stacktrace-report-stackframes-url-message-requestoptions-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-string-"><code>StackTrace.report(stackframes, url, message, requestOptions)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(String)</h4>
+<p>Given an an error message and Array of StackFrames, serialize and POST to given URL. Promise is resolved with response text from POST request.</p>
 <p>Example JSON POST data:</p>
 <pre><code>{
+  message: &#39;BOOM&#39;,
   stack: [
     {functionName: &#39;fn&#39;, fileName: &#39;file.js&#39;, lineNumber: 32, columnNumber: 1},
     {functionName: &#39;fn2&#39;, fileName: &#39;file.js&#39;, lineNumber: 543, columnNumber: 32},
@@ -109,29 +136,24 @@ Fails silently (though <code>fn</code> is still called) if a stack trace couldn&
 </code></pre><ul>
 <li><strong>stackframes: Array(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>)</strong> - Previously wrapped Function</li>
 <li><strong>url: String</strong> - URL to POST stack JSON to</li>
+<li><strong>message: String</strong> - The error message</li>
+<li><strong>requestOptions: Object</strong> - HTTP request options object. Only <code>headers: {key: val}</code> is supported.</li>
 </ul>
 <h2 id="browser-support">Browser Support</h2>
-<ul>
-<li>Chrome 1+</li>
-<li>Firefox 3+</li>
-<li>Safari 5+</li>
-<li>Opera 9+</li>
-<li>IE 6+</li>
-<li>iOS 7+</li>
-<li>Android 4.0+</li>
-</ul>
+<p><a href="https://saucelabs.com/u/stacktracejs"><img src="https://saucelabs.com/browser-matrix/stacktracejs.svg" alt="Sauce Test Status"></a></p>
 <blockquote>
 <p><strong>HEADS UP</strong>: You won&#39;t get the benefit of <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a>
 in IE9- or other very old browsers.</p>
 </blockquote>
 <h2 id="using-node-js-io-js-only-">Using node.js/io.js only?</h2>
-<p>I recommend the <a href="https://www.npmjs.com/package/stack-trace">stack-trace node package</a> specifically built for node. 
+<p>I recommend the <a href="https://www.npmjs.com/package/stack-trace">stack-trace node package</a> specifically built for node.
 It has a very similar API and also supports source maps.</p>
 <h2 id="contributing">Contributing</h2>
-<p>Want to be listed as a <em>Contributor</em>? Start with the <a href="https://github.com/stacktracejs/stacktrace.js/blob/master/CONTRIBUTING.md">Contributing Guide</a>!</p>
+<p>This project adheres to the <a href="http://todogroup.org/opencodeofconduct/#stacktrace.js/me@eriwen.com">Open Code of Conduct</a>. By participating, you are expected to honor this code.</p>
+<p>Want to be listed as a <em>Contributor</em>? Start with the <a href="https://github.com/stacktracejs/stacktrace.js/blob/master/.github/CONTRIBUTING.md">Contributing Guide</a>!</p>
 <p>This project is made possible due to the efforts of these fine people:</p>
 <ul>
-<li><a href="http://www.eriwen.com">Eric Wendelin</a></li>
+<li><a href="https://www.eriwen.com">Eric Wendelin</a></li>
 <li><a href="https://github.com/victor-homyakov">Victor Homyakov</a></li>
 <li><a href="https://github.com/oliversalzburg">Oliver Salzburg</a></li>
 <li><a href="https://github.com/stacktracejs/stacktrace.js/graphs/contributors">Many others</a></li>

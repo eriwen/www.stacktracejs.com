@@ -1,17 +1,25 @@
 <h1 id="error-stack-parser-js-extract-meaning-from-js-errors">error-stack-parser.js - Extract meaning from JS Errors</h1>
-<p><a href="https://travis-ci.org/stacktracejs/error-stack-parser"><img src="https://travis-ci.org/stacktracejs/error-stack-parser.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/error-stack-parser"><img src="https://img.shields.io/coveralls/stacktracejs/error-stack-parser.svg" alt="Coverage Status"></a> <a href="https://codeclimate.com/github/stacktracejs/error-stack-parser"><img src="https://codeclimate.com/github/stacktracejs/error-stack-parser/badges/gpa.svg" alt="Code Climate"></a></p>
+<p><a href="https://travis-ci.org/stacktracejs/error-stack-parser"><img src="https://img.shields.io/travis/stacktracejs/error-stack-parser/master.svg?style=flat-square" alt="Build Status"></a>
+<a href="https://coveralls.io/r/stacktracejs/error-stack-parser?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/error-stack-parser.svg?style=flat-square" alt="Coverage Status"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/stacktracejs/error-stack-parser.svg?style=flat-square" alt="GitHub license"></a>
+<a href="https://github.com/stacktracejs/error-stack-parser/releases"><img src="https://img.shields.io/badge/size-4.8k-green.svg?style=flat-square" alt="size with dependencies"></a>
+<a href="https://github.com/stacktracejs/error-stack-parser/releases"><img src="https://img.shields.io/badge/gzipped-1.8k-green.svg?style=flat-square" alt="gzip size"></a>
+<a href="https://github.com/stacktracejs/error-stack-parser/releases"><img src="https://img.shields.io/badge/module%20format-umd-lightgrey.svg?style=flat-square&amp;colorB=ff69b4" alt="module format"></a>
+<a href="http://todogroup.org/opencodeofconduct/#stacktrace.js/me@eriwen.com"><img src="https://img.shields.io/badge/code%20of-conduct-lightgrey.svg?style=flat-square&amp;colorB=ff69b4" alt="code of conduct"></a></p>
 <p>Simple, cross-browser <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a> parser.
 This library parses and extracts function names, URLs, line numbers, and column numbers from the given Error&#39;s <code>stack</code> as
 an Array of <a href="http://git.io/stackframe">StackFrame</a>s. </p>
 <p>Once you have parsed out StackFrames, you can do much more interesting things. See <a href="http://git.io/stacktrace-gps">stacktrace-gps</a>.</p>
 <p>Note that in IE9 and earlier, <code>Error</code> objects don&#39;t have enough information to extract much of anything. In IE 10, <code>Error</code>s
-are given a <code>stack</code> once they&#39;re <code>throw</code>n. </p>
+are given a <code>stack</code> once they&#39;re <code>throw</code>n.</p>
+<h2 id="browser-support">Browser Support</h2>
+<p><a href="https://saucelabs.com/u/stacktracejs"><img src="https://saucelabs.com/browser-matrix/stacktracejs.svg" alt="Sauce Test Status"></a></p>
 <h2 id="usage">Usage</h2>
-<pre><code class="lang-js">ErrorStackParser.parse(new Error(&#39;boom&#39;));
+<pre><code class="lang-js">ErrorStackParser.parse(new Error(&#39;BOOM&#39;));
 
 =&gt; [
-        StackFrame(&#39;funky1&#39;, [], &#39;path/to/file.js&#39;, 35, 79), 
-        StackFrame(&#39;filter&#39;, undefined, &#39;https://cdn.somewherefast.com/utils.min.js&#39;, 1, 832),
+        StackFrame({functionName: &#39;foo&#39;, args: [], fileName: &#39;path/to/file.js&#39;, lineNumber: 35, columnNumber: 79, isNative: false, isEval: false}),
+        StackFrame({functionName: &#39;Bar&#39;, fileName: &#39;https://cdn.somewherefast.com/utils.min.js&#39;, lineNumber: 1, columnNumber: 832, isNative: false, isEval: false, isConstructor: true}),
         StackFrame(... and so on ...)
    ]
 </code></pre>
@@ -20,17 +28,5 @@ are given a <code>stack</code> once they&#39;re <code>throw</code>n. </p>
 bower install error-stack-parser
 https://raw.githubusercontent.com/stacktracejs/error-stack-parser/master/dist/error-stack-parser.min.js
 </code></pre>
-<h2 id="browser-support">Browser Support</h2>
-<ul>
-<li>Chrome 1+</li>
-<li>Firefox 3.6+</li>
-<li>Safari 7+</li>
-<li>Opera 9+</li>
-<li>IE 10+</li>
-<li>iOS 7+</li>
-<li>Android 4.2+</li>
-</ul>
 <h2 id="contributing">Contributing</h2>
-<p>Want to be listed as a <em>Contributor</em>? Start with the <a href="CONTRIBUTING.md">Contributing Guide</a>!</p>
-<h2 id="license">License</h2>
-<p>This project is licensed to the <a href="http://unlicense.org">Public Domain</a></p>
+<p>Want to be listed as a <em>Contributor</em>? Start with the <a href=".github/CONTRIBUTING.md">Contributing Guide</a>!</p>

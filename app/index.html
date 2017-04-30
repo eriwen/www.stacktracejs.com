@@ -99,7 +99,7 @@
       <div class="flex"></div>
 
       <footer class="drawer-footer">
-        <p>Code licensed to <a href="http://unlicense.org">Public Domain</a></p>
+        <p>Code licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a></p>
         <p>Docs under <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
       </footer>
     </paper-header-panel>
@@ -144,6 +144,8 @@
                 </p>
               </div>
             </div>
+
+            <div class="notify bg-accent"><a href="https://github.com/stacktracejs/stacktrace.js/releases/tag/v2.0.0">stacktrace.js v2.0</a> is out, featuring ES6 support, better stack frames, and more!</div>
 
             <div class="get-started content">
               <header>
@@ -237,13 +239,15 @@ StackTrace.report(stackframes, url, message);</pre>
             <footer class="home-footer bg-accent" itemscope itemtype="https://schema.org/WPFooter">
               <div class="content">
                 <p>
-                  <iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=stacktrace.js&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-                  <iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=stacktrace.js&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+                  <iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=stacktrace.js&type=star&count=true" frameborder="0" scrolling="0" width="94px" height="20px"></iframe>
+                  <a href="https://opensource.org/licenses/MIT"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="122" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h47v20H0z"/><path fill="#007ec6" d="M47 0h75v20H47z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="23.5" y="14">license</text><text x="83.5" y="14">MIT License</text></g></svg></a>
+                  <a href="https://coveralls.io/github/stacktracejs/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="102" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h59v20H0z"/><path fill="#4c1" d="M59 0h43v20H59z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="29.5" y="14">coverage</text><text x="79.5" y="14">100%</text></g></svg></a>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="126" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h91v20H0z"/><path fill="#ff69b4" d="M91 0h35v20H91z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="45.5" y="14">module format</text><text x="107.5" y="14">umd</text></g></svg>
                   <a href="https://twitter.com/stacktracejs" class="twitter-follow-button" data-show-count="false">Follow @stacktracejs</a>
                 </p>
                 <div>
                   <p>Developed and maintained by <a href="https://www.eriwen.com">Eric</a>, <a href="https://github.com/victor-homyakov">Victor</a>, <a href="https://twitter.com/oliverSalzburg">Oliver</a> and our gracious contributors.</p>
-                  <p>Code licensed to <a href="http://unlicense.org">Public Domain</a>, docs under <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+                  <p>Code licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>, docs under <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
                 </div>
               </div>
             </footer>
@@ -264,23 +268,23 @@ StackTrace.report(stackframes, url, message);</pre>
             <h3 id="use-case-give-me-a-trace-from-wherever-i-am-right-now">Use Case: Give me a trace from wherever I am right now</h3>
             <p>v0.x:</p>
 <pre><code class="lang-js">printStackTrace();
-=&gt; Array[String]
+==&gt; Array[String]
 </code></pre>
             <p>v1.x:</p>
 <pre><code class="lang-js">StackTrace.get().then(callback).catch(errback);
-=&gt; Promise(Array[StackFrame], Error)
+==&gt; Promise(Array[StackFrame], Error)
 </code></pre>
             <p><code>StackTrace.get()</code> returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></p>
             <h3 id="use-case-parse-this-error">Use Case: Parse this error</h3>
             <p>v0.x:</p>
 <pre><code class="lang-js">var error = new Error(&#39;Boom&#39;);
 printStackTrace({e: error});
-=&gt; Array[String]
+==&gt; Array[String]
 </code></pre>
             <p>v1.x:</p>
 <pre><code class="lang-js">var error = new Error(&#39;Boom&#39;);
 StackTrace.fromError(error).then(callback).catch(errback);
-=&gt; Promise(Array[StackFrame], Error);
+==&gt; Promise(Array[StackFrame], Error);
 </code></pre>
             <p>If this is all you need, you don&#39;t even need the full stacktrace.js library! Just use <a href="https://github.com/stacktracejs/error-stack-parser">error-stack-parser</a>!</p>
 <pre><code class="lang-js">ErrorStackParser.parse(new Error(&#39;boom&#39;));
@@ -292,18 +296,18 @@ StackTrace.fromError(error).then(callback).catch(errback);
 
 var p = new printStackTrace.implementation();
 p.instrumentFunction(this, &#39;interestingFn&#39;, logStackTrace);
-=&gt; Function (instrumented)
+==&gt; Function (instrumented)
 p.deinstrumentFunction(this, &#39;interestingFn&#39;);
-=&gt; Function (original)
+==&gt; Function (original)
 </code></pre>
             <p>v1.x:</p>
 <pre><code class="lang-js">function interestingFn() {...};
 
 StackTrace.instrument(interestingFn, callback, errback);
-=&gt; Function (instrumented)
+==&gt; Function (instrumented)
 
 StackTrace.deinstrument(interestingFn);
-=&gt; Function (original)
+==&gt; Function (original)
 </code></pre>
           </section>
 
@@ -363,7 +367,7 @@ foo();
           <section data-route="stacktrace-js" class="api-docs">
 <h1 id="stacktrace-js">stacktrace.js</h1>
 <h2 id="framework-agnostic-micro-library-for-getting-stack-traces-in-all-web-browsers">Framework-agnostic, micro-library for getting stack traces in all web browsers</h2>
-<p class="shields"><iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=stacktrace.js&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe><a href="https://travis-ci.org/stacktracejs/stacktrace.js"><img src="https://travis-ci.org/stacktracejs/stacktrace.js.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stacktrace.js?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/stacktrace.js.svg" alt="Coverage Status"></a></p>
+<p class="shields"><a href="https://opensource.org/licenses/MIT"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="122" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h47v20H0z"/><path fill="#007ec6" d="M47 0h75v20H47z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="23.5" y="14">license</text><text x="83.5" y="14">MIT License</text></g></svg></a> <a href="https://coveralls.io/github/stacktracejs/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="102" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h59v20H0z"/><path fill="#4c1" d="M59 0h43v20H59z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="29.5" y="14">coverage</text><text x="79.5" y="14">100%</text></g></svg></a></p>
 
 <p>Debug and profile your JavaScript with a <a href="http://en.wikipedia.org/wiki/Stack_trace">stack trace</a> of function calls leading to an error (or any condition you specify).</p>
 <p>stacktrace.js uses browsers&#39; <code>Error.stack</code> mechanism to generate stack traces, parses them, enhances them with
@@ -383,8 +387,8 @@ to return an Array of <a href="https://github.com/stacktracejs/stackframe">Stack
 var errback = function(err) { console.log(err.message); };
 
 StackTrace.get().then(callback).catch(errback)
-=&gt; Promise(Array[StackFrame], Error)
-=&gt; callback([StackFrame(&#39;func1&#39;, [], &#39;file.js&#39;, 203, 9), StackFrame(&#39;func2&#39;, [], &#39;http://localhost:3000/file.min.js&#39;, 1, 3284)])
+==&gt; Promise(Array[StackFrame], Error)
+==&gt; callback([StackFrame(&#39;func1&#39;, [], &#39;file.js&#39;, 203, 9), StackFrame(&#39;func2&#39;, [], &#39;http://localhost:3000/file.min.js&#39;, 1, 3284)])
 </code></pre>
 <h4 id="window-onerror-integration">window.onerror integration</h4>
 <p>Automatically handle errors</p>
@@ -397,26 +401,26 @@ StackTrace.get().then(callback).catch(errback)
 <pre><code class="lang-js">var error = new Error(&#39;BOOM!&#39;);
 
 StackTrace.fromError(error).then(callback).catch(errback)
-=&gt; Promise(Array[StackFrame], Error)
+==&gt; Promise(Array[StackFrame], Error)
 </code></pre>
 <h4 id="generate-a-stacktrace-from-walking-arguments-callee">Generate a stacktrace from walking arguments.callee</h4>
 <p>This might capture arguments information, but isn&#39;t supported in ES5 strict-mode</p>
 <pre><code class="lang-js">StackTrace.generateArtificially().then(callback).catch(errback)
-=&gt; Promise(Array[StackFrame], Error)
+==&gt; Promise(Array[StackFrame], Error)
 </code></pre>
 <h4 id="trace-every-time-a-given-function-is-invoked">Trace every time a given function is invoked</h4>
 <pre><code class="lang-js">// callback is called with an Array[StackFrame] every time
 // the wrapped interestingFn is called
 StackTrace.instrument(interestingFn, callback, errback)
-=&gt; Instrumented Function
+==&gt; Instrumented Function
 
 StackTrace.deinstrument(interestingFn)
-=&gt; De-instrumented Function
+==&gt; De-instrumented Function
 </code></pre>
 <h2 id="get-stacktrace-js">Get stacktrace.js</h2>
 <pre><code>npm install stacktrace-js
 bower install stacktrace-js
-https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.0.0/stacktrace.min.js
+http://cdnjs.com/libraries/stacktrace.js
 </code></pre><h2 id="api">API</h2>
             <h4 id="-stacktrace-get-optional-options-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-array-stackframe-https-github-com-stacktracejs-stackframe-"><code>StackTrace.get(/*optional*/ options)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>])</h4>
             <p>Generate a backtrace from invocation point, then parse and enhance it.</p>
@@ -425,6 +429,12 @@ https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.0.0/stacktrace.min.js
               <li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a> =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code> </li>
               <li><em>sourceCache: Object (String URL =&gt; String Source)</em> - Pre-populate source cache to avoid network requests</li>
               <li><em>offline: Boolean (default: false)</em> - Set to <code>true</code> to prevent all network requests</li>
+            </ul>
+            <h4 id="-stacktrace-getsync-optional-options-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-array-stackframe-https-github-com-stacktracejs-stackframe-"><code>StackTrace.getSync(/*optional*/ options)</code> =&gt; Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>]</h4>
+            <p>Generate a backtrace from invocation point, then parse it. This method does not use source maps or guess anonymous functions.</p>
+            <p><strong>(Optional) options: Object</strong></p>
+            <ul>
+              <li><em>filter: Function(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a> =&gt; Boolean)</em> - Only include stack entries matching for which <code>filter</code> returns <code>true</code> </li>
             </ul>
             <h4 id="-stacktrace-fromerror-error-optional-options-promise-https-developer-mozilla-org-en-us-docs-web-javascript-reference-global_objects-promise-array-stackframe-https-github-com-stacktracejs-stackframe-"><code>StackTrace.fromError(error, /*optional*/ options)</code> =&gt; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>(Array[<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>])</h4>
             <p>Given an Error object, use <a href="https://github.com/stacktracejs/error-stack-parser">error-stack-parser</a>
@@ -473,6 +483,8 @@ https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.0.0/stacktrace.min.js
 </code></pre><ul>
             <li><strong>stackframes: Array(<a href="https://github.com/stacktracejs/stackframe">StackFrame</a>)</strong> - Previously wrapped Function</li>
             <li><strong>url: String</strong> - URL to POST stack JSON to</li>
+            <li><strong>message: String</strong> - Optional Error message</li>
+            <li><strong>requestOptions: Object</strong> - Request Headers {headers: {key: "value"}}</li>
           </ul>
 <h2 id="browser-support">Browser Support</h2>
 <ul>
@@ -505,11 +517,11 @@ It has a very similar API and also supports source maps.</p>
           <section data-route="stacktrace-gps" class="api-docs">
             <h1 id="stacktrace-gps-turn-partial-code-location-into-precise-code-location">stacktrace-gps</h1>
             <h2>Turn partial code location into precise code location</h2>
-            <p class="shields"><iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=stacktrace-gps&type=star&count=true" frameborder="0" scrolling="0" width="83px" height="20px"></iframe><a href="https://travis-ci.org/stacktracejs/stacktrace-gps"><img src="https://travis-ci.org/stacktracejs/stacktrace-gps.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stacktrace-gps"><img src="https://img.shields.io/coveralls/stacktracejs/stacktrace-gps.svg" alt="Coverage Status"></a></p>
+            <p class="shields"><a href="https://opensource.org/licenses/MIT"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="122" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h47v20H0z"/><path fill="#007ec6" d="M47 0h75v20H47z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="23.5" y="14">license</text><text x="83.5" y="14">MIT License</text></g></svg></a> <a href="https://coveralls.io/github/stacktracejs/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="94" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h59v20H0z"/><path fill="#97CA00" d="M59 0h35v20H59z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="29.5" y="14">coverage</text><text x="75.5" y="14">97%</text></g></svg></a></p>
             <p>This library accepts a code location (in the form of a <a href="https://github.com/stacktracejs/stackframe">StackFrame</a>) and
               returns a new StackFrame with a more accurate location (using <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a>) and guessed function names.</p>
             <h2 id="usage">Usage</h2>
-<pre><code class="lang-js">var stackframe = new StackFrame(undefined, [], 'http://localhost:3000/file.min.js', 1, 3284);
+            <pre><code class="lang-js">var stackframe = new StackFrame({fileName: &#39;http://localhost:3000/file.min.js&#39;, lineNumber: 1, columnNumber: 3284});
 var callback = function myCallback(foundFunctionName) { console.log(foundFunctionName); };
 
 // Such meta. Wow
@@ -519,15 +531,15 @@ var gps = new StackTraceGPS();
 
 // Pinpoint actual function name and source-mapped location
 gps.pinpoint(stackframe).then(callback, errback);
-=&gt; Promise(StackFrame('fun', [], 'file.js', 203, 9), Error)
+//===&gt; Promise(StackFrame({functionName: &#39;fun&#39;, fileName: &#39;file.js&#39;, lineNumber: 203, columnNumber: 9}), Error)
 
 // Better location/name information from source maps
 gps.getMappedLocation(stackframe).then(callback, errback);
-=&gt; Promise(StackFrame(undefined, [], 'file.js', 203, 9), Error)
+//===&gt; Promise(StackFrame({fileName: &#39;file.js&#39;, lineNumber: 203, columnNumber: 9}), Error)
 
 // Get function name from location information
 gps.findFunctionName(stackframe).then(callback, errback);
-=&gt; Promise(StackFrame('fun', [], 'http://localhost:3000/file.min.js', 1, 3284), Error)
+//===&gt; Promise(StackFrame({functionName: &#39;fun&#39;, fileName: &#39;http://localhost:3000/file.min.js&#39;, lineNumber: 1, columnNumber: 3284}), Error)
 </code></pre>
             <h2 id="installation">Installation</h2>
 <pre><code>npm install stacktrace-gps
@@ -575,7 +587,7 @@ https://raw.githubusercontent.com/stacktracejs/stacktrace-gps/master/dist/stackt
           <section data-route="error-stack-parser" class="api-docs">
             <h1 id="error-stack-parser-js-extract-meaning-from-js-errors">error-stack-parser</h1>
             <h2>Extract meaning from JS Errors</h2>
-            <p class="shields"><iframe src="https://ghbtns.com/github-btn.html?user=stacktracejs&repo=error-stack-parser&type=star&count=true" frameborder="0" scrolling="0" width="83px" height="20px"></iframe><a href="https://travis-ci.org/stacktracejs/error-stack-parser"><img src="https://travis-ci.org/stacktracejs/error-stack-parser.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/error-stack-parser"><img src="https://img.shields.io/coveralls/stacktracejs/error-stack-parser.svg" alt="Coverage Status"></a></p>
+            <p class="shields"><a href="https://opensource.org/licenses/MIT"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="122" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h47v20H0z"/><path fill="#007ec6" d="M47 0h75v20H47z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="23.5" y="14">license</text><text x="83.5" y="14">MIT License</text></g></svg></a> <a href="https://coveralls.io/github/stacktracejs/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="102" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h59v20H0z"/><path fill="#4c1" d="M59 0h43v20H59z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="29.5" y="14">coverage</text><text x="79.5" y="14">100%</text></g></svg></a></p>
             <p>Simple, cross-browser <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a> parser.
               This library parses and extracts function names, URLs, line numbers, and column numbers from the given Error's <code>stack</code> as
               an Array of <a href="http://git.io/stackframe">StackFrame</a>s. </p>
@@ -583,12 +595,13 @@ https://raw.githubusercontent.com/stacktracejs/stacktrace-gps/master/dist/stackt
             <p>Note that in IE9 and earlier, <code>Error</code> objects don't have enough information to extract much of anything. In IE 10, <code>Error</code>s
               are given a <code>stack</code> once they're <code>throw</code>n. </p>
             <h2 id="usage">Usage</h2>
-<pre><code class="lang-js">ErrorStackParser.parse(new Error('boom'));
+<pre><code class="lang-js">ErrorStackParser.parse(new Error(&#39;BOOM&#39;));
+
 =&gt; [
-  StackFrame('funky1', [], 'path/to/file.js', 35, 79),
-  StackFrame('filter', undefined, 'https://cdn.somewherefast.com/utils.min.js', 1, 832),
-  StackFrame(... and so on ...)
-]
+        StackFrame({functionName: &#39;foo&#39;, args: [], fileName: &#39;path/to/file.js&#39;, lineNumber: 35, columnNumber: 79, isNative: false, isEval: false}),
+        StackFrame({functionName: &#39;Bar&#39;, fileName: &#39;https://cdn.somewherefast.com/utils.min.js&#39;, lineNumber: 1, columnNumber: 832, isNative: false, isEval: false, isConstructor: true}),
+        StackFrame(... and so on ...)
+   ]
 </code></pre>
             <h2 id="installation">Installation</h2>
 <pre><code class="lang-bash">npm install error-stack-parser
@@ -612,11 +625,11 @@ https://raw.githubusercontent.com/stacktracejs/error-stack-parser/master/dist/er
           <section data-route="stack-generator" class="api-docs">
             <h1 id="stack-generator">stack-generator</h1>
             <h2>JS Object representation of a stack frame</h2>
-            <p class="shields"><a href="https://travis-ci.org/stacktracejs/stack-generator"><img src="https://travis-ci.org/stacktracejs/stack-generator.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stack-generator"><img src="https://img.shields.io/coveralls/stacktracejs/stack-generator.svg" alt="Coverage Status"></a></p>
+            <p class="shields"><a href="https://opensource.org/licenses/MIT"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="122" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h47v20H0z"/><path fill="#007ec6" d="M47 0h75v20H47z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="23.5" y="14">license</text><text x="83.5" y="14">MIT License</text></g></svg></a> <a href="https://coveralls.io/github/stacktracejs/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="102" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h59v20H0z"/><path fill="#4c1" d="M59 0h43v20H59z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="29.5" y="14">coverage</text><text x="79.5" y="14">100%</text></g></svg></a></p>
             <p>Generate artificial backtrace by walking arguments.callee.caller chain. <strong>Works everywhere except strict-mode</strong>.</p>
             <h2 id="usage">Usage</h2>
 <pre><code class="lang-js">StackGenerator.backtrace()
-  =&gt; [StackFrame('funName1', []), StackFrame(..), StackFrame(..)]
+ =&gt; [StackFrame({functionName: &#39;foo&#39;, args: []}), StackFrame(..), StackFrame(..)]
 </code></pre><h2 id="installation">Installation</h2>
 <pre><code>npm install stack-generator
 bower install stack-generator
@@ -638,39 +651,55 @@ https://raw.githubusercontent.com/stacktracejs/stack-generator/master/dist/stack
           <section data-route="stackframe" class="api-docs">
             <h1 id="stackframe">stackframe</h1>
             <h2>JS Object representation of a stack frame</h2>
-            <p class="shields"><a href="https://travis-ci.org/stacktracejs/stackframe"><img src="https://travis-ci.org/stacktracejs/stackframe.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/stacktracejs/stackframe?branch=master"><img src="https://img.shields.io/coveralls/stacktracejs/stackframe.svg" alt="Coverage Status"></a></p>
+            <p class="shields"><a href="https://opensource.org/licenses/MIT"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="122" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h47v20H0z"/><path fill="#007ec6" d="M47 0h75v20H47z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="23.5" y="14">license</text><text x="83.5" y="14">MIT License</text></g></svg></a> <a href="https://coveralls.io/github/stacktracejs/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="102" height="20"><g shape-rendering="crispEdges"><path fill="#555" d="M0 0h59v20H0z"/><path fill="#4c1" d="M59 0h43v20H59z"/></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="29.5" y="14">coverage</text><text x="79.5" y="14">100%</text></g></svg></a></p>
             <p>Underlies functionality of other modules within <a href="https://www.stacktracejs.com">stacktrace.js</a>.</p>
             <p>Written to closely resemble StackFrame representations in <a href="http://mxr.mozilla.org/mozilla-central/source/xpcom/base/nsIException.idl#14">Gecko</a> and <a href="https://code.google.com/p/v8-wiki/wiki/JavaScriptStackTraceApi">V8</a></p>
             <h2 id="usage">Usage</h2>
 <pre><code class="lang-js">// Create StackFrame and set properties
-var stackFrame = new StackFrame('funName', ['args'], 'http://localhost:3000/file.js', 1, 3288);
+var stackFrame = new StackFrame({
+    functionName: &#39;funName&#39;,
+    args: [&#39;args&#39;],
+    fileName: &#39;http://localhost:3000/file.js&#39;,
+    lineNumber: 1,
+    columnNumber: 3288,
+    isEval: true,
+    isNative: false,
+    source: &#39;ORIGINAL_STACK_LINE&#39;
+});
 
-stackFrame.functionName       // =&gt; &quot;funName&quot;
-stackFrame.setFunctionName('newName')
-stackFrame.getFunctionName()  // =&gt; &quot;newName&quot;
+stackFrame.functionName      // =&gt; &quot;funName&quot;
+stackFrame.setFunctionName(&#39;newName&#39;)
+stackFrame.getFunctionName() // =&gt; &quot;newName&quot;
 
-stackFrame.args               // =&gt; [&quot;args&quot;]
+stackFrame.args              // =&gt; [&quot;args&quot;]
 stackFrame.setArgs([])
-stackFrame.getArgs()          // =&gt; []
+stackFrame.getArgs()         // =&gt; []
 
-stackFrame.fileName           // =&gt; 'http://localhost:3000/file.min.js'
-stackFrame.setFileName('http://localhost:3000/file.js')
-stackFrame.getFileName()      // =&gt; 'http://localhost:3000/file.js'
+stackFrame.fileName          // =&gt; &#39;http://localhost:3000/file.min.js&#39;
+stackFrame.setFileName(&#39;http://localhost:3000/file.js&#39;)
+stackFrame.getFileName()     // =&gt; &#39;http://localhost:3000/file.js&#39;
 
-stackFrame.lineNumber         // =&gt; 1
+stackFrame.lineNumber        // =&gt; 1
 stackFrame.setLineNumber(325)
-stackFrame.getLineNumber()    // =&gt; 325
+stackFrame.getLineNumber()   // =&gt; 325
 
-stackFrame.columnNumber       // =&gt; 3288
+stackFrame.columnNumber      // =&gt; 3288
 stackFrame.setColumnNumber(20)
-stackFrame.getColumnNumber()  // =&gt; 20
+stackFrame.getColumnNumber() // =&gt; 20
 
-stackFrame.source             // =&gt; &#39;ORIGINAL_STACK_LINE&#39;
+stackFrame.source            // =&gt; &#39;ORIGINAL_STACK_LINE&#39;
 stackFrame.setSource(&#39;NEW_SOURCE&#39;)
-stackFrame.getSource()        // =&gt; &#39;NEW_SOURCE&#39;
+stackFrame.getSource()       // =&gt; &#39;NEW_SOURCE&#39;
 
+stackFrame.isEval            // =&gt; true
+stackFrame.setIsEval(false)
+stackFrame.getIsEval()       // =&gt; false
 
-stackFrame.toString()         // =&gt; 'funName(args)@http://localhost:3000/file.js:325:20'
+stackFrame.isNative            // =&gt; false
+stackFrame.setIsNative(true)
+stackFrame.getIsNative()       // =&gt; true
+
+stackFrame.toString() // =&gt; &#39;funName(args)@http://localhost:3000/file.js:325:20&#39;
 </code></pre>
             <h2 id="installation">Installation</h2>
 <pre><code>npm install stackframe

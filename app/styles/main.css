@@ -71,6 +71,18 @@ h4 {
   vertical-align: middle;
 }
 
+.notify {
+  font-size: 1.25em;
+  padding: 0.8em;
+  text-align: center;
+}
+
+/* Sometimes specificity seems weird */
+#mainContainer .notify a {
+  color: white;
+  text-decoration: underline;
+}
+
 .content {
   margin: 0 auto;
   max-width: 960px;
